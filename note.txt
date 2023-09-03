@@ -1,0 +1,18 @@
+template choose Qt Widgets Application
+Build Syste choose CMake
+Base class choose QWidget, uncheck Generate form checkbox
+Kit choose MSVC2019
+VCS git
+
+matlab function name: SemiCL6Func
+matlab m file name: SemiCL6Func.m
+matlab project name: SemiCL6Func
+deploy matlab project directory name: F:\MatlabTest\SemiCL6Func_vc19
+
+SemiCL6Func.m:
+function [f1_x, f1_ph1, f1_ph2, f1_ph3] = SemiCL6Func()
+...
+end
+
+SemiCL6Func.h
+extern LIB_SemiCL6Func_CPP_API void MW_CALL_CONV SemiCL6Func(int nargout, mwArray& f1_x, mwArray& f1_ph1, mwArray& f1_ph2, mwArray& f1_ph3);
