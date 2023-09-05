@@ -33,11 +33,24 @@ set(PROJECT_SOURCES
     mainicon.rc
     contentwidget.h
     contentwidget.cpp
-    linewidget.cpp
-    linewidget.h
+    f1_linewidget.cpp
+    f1_linewidget.h
+    f2_linewidget.cpp
+    f2_linewidget.h
+    f3_linewidget.cpp
+    f3_linewidget.h
+    f4_linewidget.cpp
+    f4_linewidget.h
+    f5_linewidget.cpp
+    f5_linewidget.h
+    f6_linewidget.cpp
+    f6_linewidget.h
+    f7_linewidget.cpp
+    f7_linewidget.h
     themewidget.ui
     themewidget.cpp
-    themewidget.h)
+    themewidget.h
+    commontype.h)
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
   qt_add_executable(07SemiCL6 MANUAL_FINALIZATION ${PROJECT_SOURCES}

@@ -4,9 +4,7 @@
 #include "contentwidget.h"
 #include <QChart>
 #include <QChartView>
-typedef QPair<QPointF, QString> Data;
-typedef QList<Data> DataList;
-typedef QList<DataList> DataTable;
+#include "commontype.h"
 
 QT_FORWARD_DECLARE_CLASS(Ui_ThemeWidgetForm);  //the name 'ThemeWidgetForm' is pick up when design ui,*.ui open with plain editor can watch it
 
@@ -15,7 +13,7 @@ class ThemeWidget: public ContentWidget
 {
     Q_OBJECT
 public:
-    explicit ThemeWidget(QWidget *parent = nullptr);
+    explicit ThemeWidget(QWidget *parent = nullptr, FigureData *figure_datatablemap = nullptr);
     ~ThemeWidget();
 
 private slots:
@@ -33,6 +31,15 @@ private:
     QChart *createLineChart() const;
     QChart *createSplineChart() const;
     QChart *createScatterChart() const;
+    //figure
+    QChart *createF1Chart(DataTable* figure_datatable = nullptr) const;
+    QChart *createF2Chart(DataTable* figure_datatable = nullptr) const;
+    QChart *createF3Chart(DataTable* figure_datatable = nullptr) const;
+    QChart *createF4Chart(DataTable* figure_datatable = nullptr) const;
+    QChart *createF5Chart(DataTable* figure_datatable = nullptr) const;
+    QChart *createF6Chart(DataTable* figure_datatable = nullptr) const;
+    QChart *createF7Chart(DataTable* figure_datatable = nullptr) const;
+
 
 private:
     int m_listCount;

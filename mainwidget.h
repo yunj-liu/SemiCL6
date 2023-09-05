@@ -8,6 +8,7 @@
 #include <QStringListModel>
 
 #include "contentwidget.h"  //without using 'class ContentWidget', it's equivalent to QT_FORWARD_DECLARE_CLASS
+#include "commontype.h"
 
 class MainWidget : public QWidget
 {
@@ -22,11 +23,14 @@ protected:
 
 private:
     enum Example{
-        //BoxPlotChart,
         ChartThemes,
-        //LineChart,
-        //SplineChart
-        LineChart
+        F1_LineChart,
+        F2_LineChart,
+        F3_LineChart,
+        F4_LineChart,
+        F5_LineChart,
+        F6_LineChart,
+        F7_LineChart
     };
 
     void setActiveExample(Example example);
@@ -36,6 +40,8 @@ private:
     QWidget *m_contentArea = nullptr;
     ContentWidget *m_activeWidget = nullptr;
     QHash<QString, Example> m_exampleMap;
-
+    //call dll
+    FigureData m_datatableMap;
+    FigureData generateFigureData() const;
 };
 #endif // MAINWIDGET_H

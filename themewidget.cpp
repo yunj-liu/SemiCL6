@@ -6,7 +6,7 @@
 #include <QValueAxis>
 #include <QSplineSeries>
 
-ThemeWidget::ThemeWidget(QWidget *parent):
+ThemeWidget::ThemeWidget(QWidget *parent, FigureData *figure_datatablemap):
     ContentWidget(parent),  //contentwidget.h have been included in themewidget.h
     m_listCount(3),
     m_valueMax(10),
@@ -19,14 +19,12 @@ ThemeWidget::ThemeWidget(QWidget *parent):
     populateAnimationBox();
     populateLegendBox();
 
+    /*
     //create charts
-
     QChartView *chartView;
 
-    //![5]
     chartView = new QChartView(createLineChart(), this);
     m_ui->gridLayout->addWidget(chartView, 1, 0);
-    //![5]
     m_charts << chartView;  //m_charts is QList<QChartView *>
 
     chartView = new QChartView(createSplineChart(), this);
@@ -52,6 +50,41 @@ ThemeWidget::ThemeWidget(QWidget *parent):
     chartView = new QChartView(createSplineChart(), this);
     m_ui->gridLayout->addWidget(chartView, 2, 2);
     m_charts << chartView;
+    */
+
+    //create figure charts
+    QChartView *chartView;
+    //figure1
+    chartView = new QChartView(createF1Chart(&(*figure_datatablemap)[tr("figure1")]), this);
+    m_ui->gridLayout->addWidget(chartView, 1, 0);
+    m_charts << chartView;  //m_charts is QList<QChartView *>
+    //figre2
+    chartView = new QChartView(createF2Chart(&(*figure_datatablemap)[tr("figure2")]), this);
+    m_ui->gridLayout->addWidget(chartView, 1, 1);
+    m_charts << chartView;
+    //figure3
+    chartView = new QChartView(createF3Chart(&(*figure_datatablemap)[tr("figure3")]), this);
+    m_ui->gridLayout->addWidget(chartView, 1, 2);
+    m_charts << chartView;
+    //figure4
+    chartView = new QChartView(createF4Chart(&(*figure_datatablemap)[tr("figure4")]), this);
+    m_ui->gridLayout->addWidget(chartView, 1, 3);
+    m_charts << chartView;
+    //figure5
+    chartView = new QChartView(createF5Chart(&(*figure_datatablemap)[tr("figure5")]), this);
+    m_ui->gridLayout->addWidget(chartView, 2, 0);
+    m_charts << chartView;
+    //figure6
+    chartView = new QChartView(createF6Chart(&(*figure_datatablemap)[tr("figure6")]), this);
+    m_ui->gridLayout->addWidget(chartView, 2, 1);
+    m_charts << chartView;
+    //figure7
+    chartView = new QChartView(createF7Chart(&(*figure_datatablemap)[tr("figure7")]), this);
+    m_ui->gridLayout->addWidget(chartView, 2, 2);
+    m_charts << chartView;
+
+
+
 
     // Set defaults
     m_ui->antialiasCheckBox->setChecked(true);
@@ -214,14 +247,15 @@ void ThemeWidget::updateUI()
     //![10]
 }
 
-QChart *ThemeWidget::createSplineChart() const
+QChart *ThemeWidget::createF1Chart(DataTable* figure_datatable) const
 {
     auto chart = new QChart;
-    chart->setTitle("Spline Chart");
-    QString name("Series ");
+    chart->setTitle("Find lowest nmodes eigenvectors and eigenvalues of sparse matrix");
+
+    QString name(QString::fromUtf8("\xCF\x88"));
     int nameIndex = 0;
-    for (const DataList &list : m_dataTable) {
-        auto series = new QSplineSeries(chart);
+    for(const DataList &list : *figure_datatable){
+        auto series = new QLineSeries(chart);
         for (const Data &data : list)
             series->append(data.first);
         series->setName(name + QString::number(nameIndex));
@@ -230,12 +264,247 @@ QChart *ThemeWidget::createSplineChart() const
     }
 
     chart->createDefaultAxes();
-    chart->axes(Qt::Horizontal).first()->setRange(0, m_valueMax);
-    chart->axes(Qt::Vertical).first()->setRange(0, m_valueCount);
-
+    chart->axes(Qt::Horizontal).first()->setRange(-30, 30);  //Horizontal range
+    chart->axes(Qt::Vertical).first()->setRange(-0.1, 0.04);  //Vertical range
     // Add space to label to add space between labels and axis
     auto axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).first());
     Q_ASSERT(axisY);
-    axisY->setLabelFormat("%.1f  ");
+    axisY->setLabelFormat("%.2f  ");  //set the style of scale
+    axisY->setTitleText(QString::fromUtf8("\xCF\x88"));  //axisY title
+
+    auto axisX = qobject_cast<QValueAxis *>(chart->axes(Qt::Horizontal).first());
+    Q_ASSERT(axisX);
+    axisX->setTitleText("Position[nm]");
+
     return chart;
 }
+
+QChart *ThemeWidget::createF2Chart(DataTable* figure_datatable) const
+{
+    auto chart = new QChart;
+    chart->setTitle("energy dispersion of conduction");
+
+    QString name("C");
+    int nameIndex = 1;
+    for(const DataList &list : *figure_datatable){
+        auto series = new QLineSeries(chart);
+        for (const Data &data : list)
+            series->append(data.first);
+        series->setName(name + QString::number(nameIndex));
+        nameIndex++;
+        chart->addSeries(series);
+    }
+
+    chart->createDefaultAxes();
+    chart->axes(Qt::Horizontal).first()->setRange(0, 0.08);  //Horizontal range
+    chart->axes(Qt::Vertical).first()->setRange(1.2, 1.8);  //Vertical range
+    // Add space to label to add space between labels and axis
+    auto axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).first());
+    Q_ASSERT(axisY);
+    axisY->setLabelFormat("%.1f  ");  //set the style of scale
+    axisY->setTitleText("E[eV]");  //axisY title
+
+    auto axisX = qobject_cast<QValueAxis *>(chart->axes(Qt::Horizontal).first());
+    Q_ASSERT(axisX);
+    axisX->setTitleText(QString::fromUtf8("k\xE2\x82\x9C[1/10\xE2\x81\xBB\xC2\xB9\xC2\xBA")+"m]");
+
+    return chart;
+}
+
+QChart *ThemeWidget::createF3Chart(DataTable* figure_datatable) const
+{
+    auto chart = new QChart;
+    chart->setTitle("structure of valence band");
+
+    QString name("HH");  //first three is begin of 'HH', last one begin of 'LH'
+    int nameIndex = 1;
+    for(const DataList &list : *figure_datatable){
+        auto series = new QLineSeries(chart);
+        for (const Data &data : list)
+            series->append(data.first);
+        if(nameIndex<4)
+            series->setName(name + QString::number(nameIndex));
+        else
+            series->setName("LH1");
+        nameIndex++;
+        chart->addSeries(series);
+    }
+
+    chart->createDefaultAxes();
+    chart->axes(Qt::Horizontal).first()->setRange(0, 0.08);  //Horizontal range
+    chart->axes(Qt::Vertical).first()->setRange(-120, 20);  //Vertical range
+    // Add space to label to add space between labels and axis
+    auto axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).first());
+    Q_ASSERT(axisY);
+    axisY->setLabelFormat("%.0f  ");  //set the style of scale
+    axisY->setTitleText("E[meV]");  //axisY title
+
+    auto axisX = qobject_cast<QValueAxis *>(chart->axes(Qt::Horizontal).first());
+    Q_ASSERT(axisX);
+    axisX->setLabelFormat("%.2f  ");  //set the style of scale
+    axisX->setTitleText(QString::fromUtf8("k\xE2\x82\x9C[1/10\xE2\x81\xBB\xC2\xB9\xC2\xBA")+"m]");
+
+    return chart;
+}
+
+QChart *ThemeWidget::createF4Chart(DataTable* figure_datatable) const
+{
+    auto chart = new QChart;
+    chart->setTitle("material gain");
+
+    //QString name("HH");  //first three is begin of 'HH', last one begin of 'LH'
+    //int nameIndex = 1;
+    for(const DataList &list : *figure_datatable){
+        auto series = new QLineSeries(chart);
+        for (const Data &data : list)
+            series->append(data.first);
+        //series->setName(name + QString::number(nameIndex));
+        //nameIndex++;
+        chart->addSeries(series);
+    }
+
+    chart->createDefaultAxes();
+    chart->axes(Qt::Horizontal).first()->setRange(850, 1150);  //Horizontal range
+    chart->axes(Qt::Vertical).first()->setRange(-2000, 3000);  //Vertical range
+    // Add space to label to add space between labels and axis
+    auto axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).first());
+    Q_ASSERT(axisY);
+    axisY->setLabelFormat("%.0f  ");  //set the style of scale
+    axisY->setTitleText("Gain[1/cm]");  //axisY title
+
+    auto axisX = qobject_cast<QValueAxis *>(chart->axes(Qt::Horizontal).first());
+    Q_ASSERT(axisX);
+    axisX->setLabelFormat("%.0f  ");  //set the style of scale
+    axisX->setTitleText("Wavelength[nm]");
+
+
+    return chart;
+}
+
+QChart *ThemeWidget::createF5Chart(DataTable* figure_datatable) const
+{
+    auto chart = new QChart;
+    chart->setTitle("DBR Reflectivity");
+
+    //QString name("HH");  //first three is begin of 'HH', last one begin of 'LH'
+    //int nameIndex = 1;
+    for(const DataList &list : *figure_datatable){
+        auto series = new QLineSeries(chart);
+        for (const Data &data : list)
+            series->append(data.first);
+        //series->setName(name + QString::number(nameIndex));
+        //nameIndex++;
+        chart->addSeries(series);
+    }
+
+    chart->createDefaultAxes();
+    chart->axes(Qt::Horizontal).first()->setRange(850, 1150);  //Horizontal range
+    chart->axes(Qt::Vertical).first()->setRange(0, 100);       //Vertical range
+    // Add space to label to add space between labels and axis
+    auto axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).first());
+    Q_ASSERT(axisY);
+    axisY->setLabelFormat("%.0f  ");  //set the style of scale
+    axisY->setTitleText("Reflectivity[%]");  //axisY title
+
+    auto axisX = qobject_cast<QValueAxis *>(chart->axes(Qt::Horizontal).first());
+    Q_ASSERT(axisX);
+    axisX->setLabelFormat("%.0f  ");  //set the style of scale
+    axisX->setTitleText("Wavelength[nm]");
+
+    return chart;
+}
+
+QChart *ThemeWidget::createF6Chart(DataTable* figure_datatable) const
+{
+    auto chart = new QChart;
+    chart->setTitle("VECSEL驻波场电场分布");
+
+    /*
+    //QString name("HH");  //first three is begin of 'HH', last one begin of 'LH'
+    //int nameIndex = 1;
+    for(const DataList &list : *figure_datatable){
+        auto series = new QLineSeries(chart);
+        for (const Data &data : list)
+            series->append(data.first);
+        //series->setName(name + QString::number(nameIndex));
+        //nameIndex++;
+        chart->addSeries(series);
+    }
+    */
+
+    QString name("figure6_");  //first three is begin of 'HH', last one begin of 'LH'
+    int nameIndex = 1;
+    int listcount = figure_datatable->count();
+    for(int i(0); i<listcount-1; i++){  //i<listcount-1 except last list
+        const DataList &list = figure_datatable->at(i);
+        auto series = new QLineSeries(chart);
+        for (const Data &data : list)
+            series->append(data.first);
+        series->setName(name + QString::number(nameIndex));
+        nameIndex++;
+        chart->addSeries(series);
+    }
+
+    //figure_datatable->at(listcount-1) get list
+    //at(0) get first data in list
+    //.first get QPointF
+    // .y() get second value in QPointF
+    double mm1 = (figure_datatable->at(listcount-1)).at(0).first.y();
+
+    chart->createDefaultAxes();
+    chart->axes(Qt::Horizontal).first()->setRange(0, 4800);  //Horizontal range
+    chart->axes(Qt::Vertical).first()->setRange(0, 4.5);       //Vertical range
+    // Add space to label to add space between labels and axis
+    auto axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).first());
+    Q_ASSERT(axisY);
+    axisY->setLabelFormat("%.1f  ");  //set the style of scale
+    axisY->setTitleText("|A|" + QString::fromUtf8("\xC2\xB2"));  //axisY title
+
+    auto axisX = qobject_cast<QValueAxis *>(chart->axes(Qt::Horizontal).first());
+    Q_ASSERT(axisX);
+    axisX->setLabelFormat("%.0f  ");  //set the style of scale
+    axisX->setTitleText("Position[nm]");
+
+    //according to matlab process
+    if (int(mm1*4) % 2 == 1)
+        chart->axes(Qt::Vertical).first()->setRange(0, 0.6);
+
+    if (int(mm1*8) % 2 == 1)
+        chart->axes(Qt::Vertical).first()->setRange(0, 1);
+
+    return chart;
+}
+
+QChart *ThemeWidget::createF7Chart(DataTable* figure_datatable) const
+{
+    auto chart = new QChart;
+    chart->setTitle("VECSEL纵模限制因子");
+
+    //QString name("HH");  //first three is begin of 'HH', last one begin of 'LH'
+    //int nameIndex = 1;
+    for(const DataList &list : *figure_datatable){
+        auto series = new QLineSeries(chart);
+        for (const Data &data : list)
+            series->append(data.first);
+        //series->setName(name + QString::number(nameIndex));
+        //nameIndex++;
+        chart->addSeries(series);
+    }
+
+    chart->createDefaultAxes();
+    chart->axes(Qt::Horizontal).first()->setRange(850, 1150);  //Horizontal range
+    chart->axes(Qt::Vertical).first()->setRange(0, 25);       //Vertical range
+    // Add space to label to add space between labels and axis
+    auto axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).first());
+    Q_ASSERT(axisY);
+    axisY->setLabelFormat("%.0f  ");  //set the style of scale
+    axisY->setTitleText("Intensity[a.u.]");  //axisY title
+
+    auto axisX = qobject_cast<QValueAxis *>(chart->axes(Qt::Horizontal).first());
+    Q_ASSERT(axisX);
+    axisX->setLabelFormat("%.0f  ");  //set the style of scale
+    axisX->setTitleText("Wavelength[nm]");
+
+    return chart;
+}
+
