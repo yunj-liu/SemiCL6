@@ -141,7 +141,7 @@ FigureData MainWidget::generateFigureData() const{
         msgBox.setText("SemiCL DLL initialization failed.");
         msgBox.exec();
     }
-    //figure1 array
+    //figure1 array. num of rows and cols must pre define
     mwArray matrix_f1_x(1, 1120, mxDOUBLE_CLASS, mxREAL);    //first 2 param indicate rowCnt, colCnt. 1 row,1120 cols, store in col priority , also means 1 col, 1120 rows.
     mwArray matrix_f1_ph1(1, 1120, mxDOUBLE_CLASS, mxREAL);
     mwArray matrix_f1_ph2(1, 1120, mxDOUBLE_CLASS, mxREAL);
@@ -170,9 +170,6 @@ FigureData MainWidget::generateFigureData() const{
     //figure7 array
     mwArray matrix_f7_x(1, 301, mxDOUBLE_CLASS, mxREAL);
     mwArray matrix_f7_TT(1, 301, mxDOUBLE_CLASS, mxREAL);
-
-
-
 
 
     int nargout=22;  // the number of return params. must correct.
