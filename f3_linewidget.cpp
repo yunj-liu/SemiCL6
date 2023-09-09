@@ -5,19 +5,26 @@
 F3_LineWidget::F3_LineWidget(QWidget *parent, DataTable* figure_datatable) : ContentWidget(parent)
 {
     auto chart = new QChart;
-    chart->setTitle("structure of valence band");
+    chart->setTitle("Fig.3 价带空穴能量色散关系");
 
     QString name("HH");  //first three is begin of 'HH', last one begin of 'LH'
     int nameIndex = 1;
-    for(const DataList &list : *figure_datatable){
+    if(!figure_datatable->isEmpty())
+    {
+        for(const DataList &list : *figure_datatable){
+            auto series = new QLineSeries(chart);
+            for (const Data &data : list)
+                series->append(data.first);
+            if(nameIndex<4)
+                series->setName(name + QString::number(nameIndex));
+            else
+                series->setName("LH1");
+            nameIndex++;
+            chart->addSeries(series);
+        }
+    }
+    else{
         auto series = new QLineSeries(chart);
-        for (const Data &data : list)
-            series->append(data.first);
-        if(nameIndex<4)
-            series->setName(name + QString::number(nameIndex));
-        else
-            series->setName("LH1");
-        nameIndex++;
         chart->addSeries(series);
     }
 

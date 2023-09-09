@@ -33,16 +33,23 @@ F1_LineWidget::F1_LineWidget(QWidget *parent, DataTable* figure_datatable) : Con
     */
 
     auto chart = new QChart;
-    chart->setTitle("Find lowest nmodes eigenvectors and eigenvalues of sparse matrix");
+    chart->setTitle("Fig.1 导带电子波函数");
 
     QString name(QString::fromUtf8("\xCF\x88"));  //phi, http://www.kreativekorp.com/charset/unicode/
-    int nameIndex = 0;
-    for(const DataList &list : *figure_datatable){
+    int nameIndex = 1;
+    if(!figure_datatable->isEmpty())
+    {
+        for(const DataList &list : *figure_datatable){
+            auto series = new QLineSeries(chart);
+            for (const Data &data : list)
+                series->append(data.first);
+            series->setName(name + QString::number(nameIndex));
+            nameIndex++;
+            chart->addSeries(series);
+        }
+    }
+    else{
         auto series = new QLineSeries(chart);
-        for (const Data &data : list)
-            series->append(data.first);
-        series->setName(name + QString::number(nameIndex));
-        nameIndex++;
         chart->addSeries(series);
     }
 

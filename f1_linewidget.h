@@ -1,8 +1,8 @@
-#ifndef F1_LINEWIDGET_H
+﻿#ifndef F1_LINEWIDGET_H
 #define F1_LINEWIDGET_H
 
 #include "contentwidget.h"
-#include "commontype.h"
+#include "commoncontrol.h"
 
 class F1_LineWidget : public ContentWidget
 {

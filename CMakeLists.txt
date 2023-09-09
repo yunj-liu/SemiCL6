@@ -50,7 +50,9 @@ set(PROJECT_SOURCES
     themewidget.ui
     themewidget.cpp
     themewidget.h
-    commontype.h)
+    commontype.h
+    commoncontrol.cpp
+    commoncontrol.h)
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
   qt_add_executable(07SemiCL6 MANUAL_FINALIZATION ${PROJECT_SOURCES}

@@ -4,7 +4,7 @@
 #include "contentwidget.h"
 #include <QChart>
 #include <QChartView>
-#include "commontype.h"
+#include "commoncontrol.h"
 
 QT_FORWARD_DECLARE_CLASS(Ui_ThemeWidgetForm);  //the name 'ThemeWidgetForm' is pick up when design ui,*.ui open with plain editor can watch it
 
@@ -28,7 +28,7 @@ private:
     QChart *createAreaChart() const;
     QChart *createBarChart(int valueCount) const;
     QChart *createPieChart() const;
-    QChart *createLineChart() const;
+    //QChart *createLineChart() const;
     QChart *createSplineChart() const;
     QChart *createScatterChart() const;
     //figure
@@ -46,7 +46,7 @@ private:
     int m_valueMax;
     int m_valueCount;
     QList<QChartView *> m_charts;
-    DataTable m_dataTable;
+    //DataTable m_dataTable;
 
     Ui_ThemeWidgetForm *m_ui;
 };

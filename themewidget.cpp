@@ -11,7 +11,7 @@ ThemeWidget::ThemeWidget(QWidget *parent, FigureData *figure_datatablemap):
     m_listCount(3),
     m_valueMax(10),
     m_valueCount(7),
-    m_dataTable(generateRandomData(m_listCount, m_valueMax, m_valueCount)),
+    //m_dataTable(generateRandomData(m_listCount, m_valueMax, m_valueCount)),
     m_ui(new Ui_ThemeWidgetForm) //ThemeWidgetForm is the ui class name, you can watch it in ui_themewidget.h
 {
     m_ui->setupUi(this);
@@ -84,12 +84,10 @@ ThemeWidget::ThemeWidget(QWidget *parent, FigureData *figure_datatablemap):
     m_charts << chartView;
 
 
-
-
     // Set defaults
     m_ui->antialiasCheckBox->setChecked(true);
     m_ui->themeComboBox->setCurrentIndex(1);    //Blue Cerulean
-    m_ui->animatedComboBox->setCurrentIndex(3); //All Animations
+    m_ui->animatedComboBox->setCurrentIndex(1); //All Animations
 
     updateUI();
 }
@@ -160,43 +158,43 @@ void ThemeWidget::populateLegendBox()
     m_ui->legendComboBox->addItem("Legend Right", Qt::AlignRight);
 }
 
-QChart *ThemeWidget::createLineChart() const
-{
-    //![1]
-    auto chart = new QChart;
-    chart->setTitle("Line Chart");
-    //![1]
+//QChart *ThemeWidget::createLineChart() const
+//{
+//    //![1]
+//    auto chart = new QChart;
+//    chart->setTitle("Line Chart");
+//    //![1]
 
-    //![2]
-    QString name("Series ");  //1.typedef QPair<QPointF, QString> Data; 2.typedef QList<Data> DataList; 3.typedef QList<DataList> DataTable;
-    int nameIndex = 0;
-    for (const DataList &list : m_dataTable) { //DataTable m_dataTable; colon iteration, if want modify parameters value must use ref pass
-        auto series = new QLineSeries(chart);
-        for (const Data &data : list)
-            series->append(data.first);  //data.first is QPointF. item of series use *series << QPointF(11, 1) or series->append(7, 4); The two values represent the horizontal and vertical coordinates respectively
-        series->setName(name + QString::number(nameIndex));
-        nameIndex++;    //m_dataTable is list of list. it has 3 list.
-        chart->addSeries(series);  // a series represent a line, has 3 lines, then the chart has 3 series
-    }
-    //![2]
+//    //![2]
+//    QString name("Series ");  //1.typedef QPair<QPointF, QString> Data; 2.typedef QList<Data> DataList; 3.typedef QList<DataList> DataTable;
+//    int nameIndex = 0;
+//    for (const DataList &list : m_dataTable) { //DataTable m_dataTable; colon iteration, if want modify parameters value must use ref pass
+//        auto series = new QLineSeries(chart);
+//        for (const Data &data : list)
+//            series->append(data.first);  //data.first is QPointF. item of series use *series << QPointF(11, 1) or series->append(7, 4); The two values represent the horizontal and vertical coordinates respectively
+//        series->setName(name + QString::number(nameIndex));
+//        nameIndex++;    //m_dataTable is list of list. it has 3 list.
+//        chart->addSeries(series);  // a series represent a line, has 3 lines, then the chart has 3 series
+//    }
+//    //![2]
 
-    //![3]
-    chart->createDefaultAxes();
-    chart->axes(Qt::Horizontal).first()->setRange(0, m_valueMax);  //Horizontal range
-    chart->axes(Qt::Vertical).first()->setRange(0, m_valueCount);  //Vertical range
-    //![3]
-    //![4]
-    // Add space to label to add space between labels and axis
-    auto axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).first());
-    Q_ASSERT(axisY);
-    axisY->setLabelFormat("%.1f  ");  //set the style of scale
-    //axisY->setLabelFormat("%.4f      ");  //
-    //axisY->setLabelsVisible(false);  //Vertical scale invisible
-    //axisY->setGridLineVisible(false);  //Vertical gridline invisible
-    //![4]
+//    //![3]
+//    chart->createDefaultAxes();
+//    chart->axes(Qt::Horizontal).first()->setRange(0, m_valueMax);  //Horizontal range
+//    chart->axes(Qt::Vertical).first()->setRange(0, m_valueCount);  //Vertical range
+//    //![3]
+//    //![4]
+//    // Add space to label to add space between labels and axis
+//    auto axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).first());
+//    Q_ASSERT(axisY);
+//    axisY->setLabelFormat("%.1f  ");  //set the style of scale
+//    //axisY->setLabelFormat("%.4f      ");  //
+//    //axisY->setLabelsVisible(false);  //Vertical scale invisible
+//    //axisY->setGridLineVisible(false);  //Vertical gridline invisible
+//    //![4]
 
-    return chart;
-}
+//    return chart;
+//}
 
 void ThemeWidget::updateUI()
 {
@@ -250,20 +248,27 @@ void ThemeWidget::updateUI()
 QChart *ThemeWidget::createF1Chart(DataTable* figure_datatable) const
 {
     auto chart = new QChart;
-    chart->setTitle("Find lowest nmodes eigenvectors and eigenvalues of sparse matrix");
+    chart->setTitle("Fig.1 导带电子波函数");
 
     QString name(QString::fromUtf8("\xCF\x88"));
-    int nameIndex = 0;
-    for(const DataList &list : *figure_datatable){
+    int nameIndex = 1;
+    if(!figure_datatable->isEmpty())
+    {
+        for(const DataList &list : *figure_datatable){
+            auto series = new QLineSeries(chart);
+            for (const Data &data : list)
+                series->append(data.first);
+            series->setName(name + QString::number(nameIndex));
+            nameIndex++;
+            chart->addSeries(series);
+        }
+    }
+    else{
         auto series = new QLineSeries(chart);
-        for (const Data &data : list)
-            series->append(data.first);
-        series->setName(name + QString::number(nameIndex));
-        nameIndex++;
         chart->addSeries(series);
     }
 
-    chart->createDefaultAxes();
+    chart->createDefaultAxes();  //based on series
     chart->axes(Qt::Horizontal).first()->setRange(-30, 30);  //Horizontal range
     chart->axes(Qt::Vertical).first()->setRange(-0.1, 0.04);  //Vertical range
     // Add space to label to add space between labels and axis
@@ -282,16 +287,23 @@ QChart *ThemeWidget::createF1Chart(DataTable* figure_datatable) const
 QChart *ThemeWidget::createF2Chart(DataTable* figure_datatable) const
 {
     auto chart = new QChart;
-    chart->setTitle("energy dispersion of conduction");
+    chart->setTitle("Fig.2 导带电子能量色散关系");
 
     QString name("C");
     int nameIndex = 1;
-    for(const DataList &list : *figure_datatable){
+    if(!figure_datatable->isEmpty())
+    {
+        for(const DataList &list : *figure_datatable){
+            auto series = new QLineSeries(chart);
+            for (const Data &data : list)
+                series->append(data.first);
+            series->setName(name + QString::number(nameIndex));
+            nameIndex++;
+            chart->addSeries(series);
+        }
+    }
+    else{
         auto series = new QLineSeries(chart);
-        for (const Data &data : list)
-            series->append(data.first);
-        series->setName(name + QString::number(nameIndex));
-        nameIndex++;
         chart->addSeries(series);
     }
 
@@ -314,19 +326,26 @@ QChart *ThemeWidget::createF2Chart(DataTable* figure_datatable) const
 QChart *ThemeWidget::createF3Chart(DataTable* figure_datatable) const
 {
     auto chart = new QChart;
-    chart->setTitle("structure of valence band");
+    chart->setTitle("Fig.3 价带空穴能量色散关系");
 
     QString name("HH");  //first three is begin of 'HH', last one begin of 'LH'
     int nameIndex = 1;
-    for(const DataList &list : *figure_datatable){
+    if(!figure_datatable->isEmpty())
+    {
+        for(const DataList &list : *figure_datatable){
+            auto series = new QLineSeries(chart);
+            for (const Data &data : list)
+                series->append(data.first);
+            if(nameIndex<4)
+                series->setName(name + QString::number(nameIndex));
+            else
+                series->setName("LH1");
+            nameIndex++;
+            chart->addSeries(series);
+        }
+    }
+    else{
         auto series = new QLineSeries(chart);
-        for (const Data &data : list)
-            series->append(data.first);
-        if(nameIndex<4)
-            series->setName(name + QString::number(nameIndex));
-        else
-            series->setName("LH1");
-        nameIndex++;
         chart->addSeries(series);
     }
 
@@ -350,16 +369,23 @@ QChart *ThemeWidget::createF3Chart(DataTable* figure_datatable) const
 QChart *ThemeWidget::createF4Chart(DataTable* figure_datatable) const
 {
     auto chart = new QChart;
-    chart->setTitle("material gain");
+    chart->setTitle("Fig.4 量子阱材料增益谱");
 
     //QString name("HH");  //first three is begin of 'HH', last one begin of 'LH'
     //int nameIndex = 1;
-    for(const DataList &list : *figure_datatable){
+    if(!figure_datatable->isEmpty())
+    {
+        for(const DataList &list : *figure_datatable){
+            auto series = new QLineSeries(chart);
+            for (const Data &data : list)
+                series->append(data.first);
+            //series->setName(name + QString::number(nameIndex));
+            //nameIndex++;
+            chart->addSeries(series);
+        }
+    }
+    else{
         auto series = new QLineSeries(chart);
-        for (const Data &data : list)
-            series->append(data.first);
-        //series->setName(name + QString::number(nameIndex));
-        //nameIndex++;
         chart->addSeries(series);
     }
 
@@ -384,16 +410,23 @@ QChart *ThemeWidget::createF4Chart(DataTable* figure_datatable) const
 QChart *ThemeWidget::createF5Chart(DataTable* figure_datatable) const
 {
     auto chart = new QChart;
-    chart->setTitle("DBR Reflectivity");
+    chart->setTitle("Fig.5 DBR反射谱");
 
     //QString name("HH");  //first three is begin of 'HH', last one begin of 'LH'
     //int nameIndex = 1;
-    for(const DataList &list : *figure_datatable){
+    if(!figure_datatable->isEmpty())
+    {
+        for(const DataList &list : *figure_datatable){
+            auto series = new QLineSeries(chart);
+            for (const Data &data : list)
+                series->append(data.first);
+            //series->setName(name + QString::number(nameIndex));
+            //nameIndex++;
+            chart->addSeries(series);
+        }
+    }
+    else{
         auto series = new QLineSeries(chart);
-        for (const Data &data : list)
-            series->append(data.first);
-        //series->setName(name + QString::number(nameIndex));
-        //nameIndex++;
         chart->addSeries(series);
     }
 
@@ -417,7 +450,7 @@ QChart *ThemeWidget::createF5Chart(DataTable* figure_datatable) const
 QChart *ThemeWidget::createF6Chart(DataTable* figure_datatable) const
 {
     auto chart = new QChart;
-    chart->setTitle("VECSEL驻波场电场分布");
+    chart->setTitle("Fig.6 增益芯片内部驻波场电场分布");
 
     /*
     //QString name("HH");  //first three is begin of 'HH', last one begin of 'LH'
@@ -432,16 +465,26 @@ QChart *ThemeWidget::createF6Chart(DataTable* figure_datatable) const
     }
     */
 
-    QString name("figure6_");  //first three is begin of 'HH', last one begin of 'LH'
-    int nameIndex = 1;
-    int listcount = figure_datatable->count();
-    for(int i(0); i<listcount-1; i++){  //i<listcount-1 except last list
-        const DataList &list = figure_datatable->at(i);
+    //QString name("figure6_");  //first three is begin of 'HH', last one begin of 'LH'
+    int listcount = 0;
+    double mm1 = 1;
+    //int nameIndex = 1;
+    if(!figure_datatable->isEmpty())
+    {
+        listcount = figure_datatable->count();
+        for(int i(0); i<listcount-1; i++){  //i<listcount-1 except last list
+            const DataList &list = figure_datatable->at(i);
+            auto series = new QLineSeries(chart);
+            for (const Data &data : list)
+                series->append(data.first);
+            //series->setName(name + QString::number(nameIndex));
+            //nameIndex++;
+            chart->addSeries(series);
+        }
+        mm1 = (figure_datatable->at(listcount-1)).at(0).first.y();
+    }
+    else{
         auto series = new QLineSeries(chart);
-        for (const Data &data : list)
-            series->append(data.first);
-        series->setName(name + QString::number(nameIndex));
-        nameIndex++;
         chart->addSeries(series);
     }
 
@@ -449,7 +492,6 @@ QChart *ThemeWidget::createF6Chart(DataTable* figure_datatable) const
     //at(0) get first data in list
     //.first get QPointF
     // .y() get second value in QPointF
-    double mm1 = (figure_datatable->at(listcount-1)).at(0).first.y();
 
     chart->createDefaultAxes();
     chart->axes(Qt::Horizontal).first()->setRange(0, 4800);  //Horizontal range
@@ -478,16 +520,23 @@ QChart *ThemeWidget::createF6Chart(DataTable* figure_datatable) const
 QChart *ThemeWidget::createF7Chart(DataTable* figure_datatable) const
 {
     auto chart = new QChart;
-    chart->setTitle("VECSEL纵模限制因子");
+    chart->setTitle("Fig.7 增益芯片纵模限制因子");
 
     //QString name("HH");  //first three is begin of 'HH', last one begin of 'LH'
     //int nameIndex = 1;
-    for(const DataList &list : *figure_datatable){
+    if(!figure_datatable->isEmpty())
+    {
+        for(const DataList &list : *figure_datatable){
+            auto series = new QLineSeries(chart);
+            for (const Data &data : list)
+                series->append(data.first);
+            //series->setName(name + QString::number(nameIndex));
+            //nameIndex++;
+            chart->addSeries(series);
+        }
+    }
+    else{
         auto series = new QLineSeries(chart);
-        for (const Data &data : list)
-            series->append(data.first);
-        //series->setName(name + QString::number(nameIndex));
-        //nameIndex++;
         chart->addSeries(series);
     }
 

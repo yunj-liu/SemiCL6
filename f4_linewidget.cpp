@@ -5,16 +5,23 @@
 F4_LineWidget::F4_LineWidget(QWidget *parent, DataTable* figure_datatable) : ContentWidget(parent)
 {
     auto chart = new QChart;
-    chart->setTitle("material gain");
+    chart->setTitle("Fig.4 量子阱材料增益谱");
 
     //QString name("HH");  //first three is begin of 'HH', last one begin of 'LH'
     //int nameIndex = 1;
-    for(const DataList &list : *figure_datatable){
+    if(!figure_datatable->isEmpty())
+    {
+        for(const DataList &list : *figure_datatable){
+            auto series = new QLineSeries(chart);
+            for (const Data &data : list)
+                series->append(data.first);
+            //series->setName(name + QString::number(nameIndex));
+            //nameIndex++;
+            chart->addSeries(series);
+        }
+    }
+    else{
         auto series = new QLineSeries(chart);
-        for (const Data &data : list)
-            series->append(data.first);
-        //series->setName(name + QString::number(nameIndex));
-        //nameIndex++;
         chart->addSeries(series);
     }
 

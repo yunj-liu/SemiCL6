@@ -5,16 +5,23 @@
 F2_LineWidget::F2_LineWidget(QWidget *parent, DataTable* figure_datatable) : ContentWidget(parent)
 {
     auto chart = new QChart;
-    chart->setTitle("energy dispersion of conduction");
+    chart->setTitle("Fig.2 导带电子能量色散关系");
 
     QString name("C");
     int nameIndex = 1;
-    for(const DataList &list : *figure_datatable){
+    if(!figure_datatable->isEmpty())
+    {
+        for(const DataList &list : *figure_datatable){
+            auto series = new QLineSeries(chart);
+            for (const Data &data : list)
+                series->append(data.first);
+            series->setName(name + QString::number(nameIndex));
+            nameIndex++;
+            chart->addSeries(series);
+        }
+    }
+    else{
         auto series = new QLineSeries(chart);
-        for (const Data &data : list)
-            series->append(data.first);
-        series->setName(name + QString::number(nameIndex));
-        nameIndex++;
         chart->addSeries(series);
     }
 

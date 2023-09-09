@@ -3,12 +3,11 @@
 
 #include <QHash>
 #include <QWidget>  //Actually in contentwidget.h There have been include QWidget,but QWidget have #ifndef, so don't worry about including one more time again
-
 #include <QListView>  // without using QT_FORWARD_DECLARE_CLASS instead of using #include
 #include <QStringListModel>
 
 #include "contentwidget.h"  //without using 'class ContentWidget', it's equivalent to QT_FORWARD_DECLARE_CLASS
-#include "commontype.h"
+#include "commoncontrol.h"
 
 class MainWidget : public QWidget
 {
@@ -42,6 +41,6 @@ private:
     QHash<QString, Example> m_exampleMap;
     //call dll
     FigureData m_datatableMap;
-    FigureData generateFigureData() const;
+    //FigureData generateFigureData() const;
 };
 #endif // MAINWIDGET_H

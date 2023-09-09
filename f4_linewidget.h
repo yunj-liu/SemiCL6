@@ -2,7 +2,7 @@
 #define F4_LINEWIDGET_H
 
 #include "contentwidget.h"
-#include "commontype.h"
+#include "commoncontrol.h"
 
 class F4_LineWidget : public ContentWidget
 {
