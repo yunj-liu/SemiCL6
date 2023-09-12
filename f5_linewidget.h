@@ -1,4 +1,9 @@
-﻿#ifndef F5_LINEWIDGET_H
+﻿/*******************************************************************
+* This file was created in Chongqing in 2023-09-09 22:30:39.       *
+* Written by Yun-Jie Liu.                                          *
+* <email: liu.yunjie@qq.com>                                       *
+********************************************************************/
+#ifndef F5_LINEWIDGET_H
 #define F5_LINEWIDGET_H
 
 #include "contentwidget.h"

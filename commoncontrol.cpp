@@ -1,4 +1,9 @@
-﻿#include "commoncontrol.h"
+﻿/*******************************************************************
+* This file was created in Chongqing in 2023-09-09 22:30:39.       *
+* Written by Yun-Jie Liu.                                          *
+* <email: liu.yunjie@qq.com>                                       *
+********************************************************************/
+#include "commoncontrol.h"
 #include <QFile>
 #include <QDir>
 #include "SemiCL6Func.h"
@@ -85,7 +90,7 @@ FigureData CommonControl::getFigureDataHashMapFromCsvFile(QString sFoldName, int
     return datatableMap;
 }
 
-FigureData CommonControl::generateFigureData(){
+FigureData CommonControl::generateFigureData(double(*pArrInParams)[12]){
     FigureData datatableMap;
     if (!SemiCL6FuncInitialize()) // DLL Initialize
     {
@@ -123,8 +128,12 @@ FigureData CommonControl::generateFigureData(){
     mwArray matrix_f7_x(1, 301, mxDOUBLE_CLASS, mxREAL);
     mwArray matrix_f7_TT(1, 301, mxDOUBLE_CLASS, mxREAL);
 
+    //In params, pass into matlab dll
+    mwArray matrix_inParams(1, 12, mxDOUBLE_CLASS, mxREAL);  // 12 is the num of InParams, pass 12 params into matlab dll
+    matrix_inParams.SetData(*pArrInParams, 12);
 
-    int nargout=22;  // the number of return params. must correct.
+
+    int nargout=22;      // the number of return params. must correct. i.e. num of out params
     SemiCL6Func(nargout,
                 matrix_f1_x, matrix_f1_ph1, matrix_f1_ph2, matrix_f1_ph3,
                 matrix_f2_x, matrix_f2_E1, matrix_f2_E2, matrix_f2_E3,
@@ -132,7 +141,9 @@ FigureData CommonControl::generateFigureData(){
                 matrix_f4_x, matrix_f4_gai,
                 matrix_f5_x, matrix_f5_ref,
                 matrix_f6_x, matrix_f6_YYy, matrix_f6_mm1,
-                matrix_f7_x, matrix_f7_TT
+                matrix_f7_x, matrix_f7_TT,
+                //below, the 23 param is the In params
+                matrix_inParams
                 );
 
     int listCount(0);

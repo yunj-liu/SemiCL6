@@ -52,7 +52,17 @@ set(PROJECT_SOURCES
     themewidget.h
     commontype.h
     commoncontrol.cpp
-    commoncontrol.h)
+    commoncontrol.h
+    mainwindow.cpp
+    mainwindow.h
+    ltoolbar.cpp
+    ltoolbar.h
+    setparamwidget.cpp
+    setparamwidget.h
+    calcwidget.cpp
+    calcwidget.h
+    calcmatlabthread.cpp
+    calcmatlabthread.h)
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
   qt_add_executable(07SemiCL6 MANUAL_FINALIZATION ${PROJECT_SOURCES}

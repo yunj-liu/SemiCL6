@@ -1,4 +1,9 @@
-﻿#ifndef CONTENTWIDGET_H
+﻿/*******************************************************************
+* This file was created in Chongqing in 2023-09-09 22:30:39.       *
+* Written by Yun-Jie Liu.                                          *
+* <email: liu.yunjie@qq.com>                                       *
+********************************************************************/
+#ifndef CONTENTWIDGET_H
 #define CONTENTWIDGET_H
 
 #include <QWidget>

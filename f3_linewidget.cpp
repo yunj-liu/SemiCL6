@@ -1,4 +1,9 @@
-﻿#include "f3_linewidget.h"
+﻿/*******************************************************************
+* This file was created in Chongqing in 2023-09-09 22:30:39.       *
+* Written by Yun-Jie Liu.                                          *
+* <email: liu.yunjie@qq.com>                                       *
+********************************************************************/
+#include "f3_linewidget.h"
 #include <QLineSeries>
 #include <QValueAxis>
 

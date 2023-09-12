@@ -1,4 +1,9 @@
-﻿#include "mainwidget.h"
+﻿/*******************************************************************
+* This file was created in Chongqing in 2023-09-09 22:30:39.       *
+* Written by Yun-Jie Liu.                                          *
+* <email: liu.yunjie@qq.com>                                       *
+********************************************************************/
+#include "mainwidget.h"
 #include "f1_linewidget.h"
 #include "f2_linewidget.h"
 #include "f3_linewidget.h"
@@ -31,7 +36,7 @@ MainWidget::MainWidget(QWidget *parent)
     m_exampleMap.insert(tr("Fig.6 增益芯片内部驻波场电场分布"), F6_LineChart);
     m_exampleMap.insert(tr("Fig.7 增益芯片纵模限制因子"), F7_LineChart);
 
-    QStringList examples = m_exampleMap.keys();  //QStringList is QList<QString>, m_exampleMap type is QHash<QString, Example>
+    examples = m_exampleMap.keys();  //QStringList is QList<QString>, m_exampleMap type is QHash<QString, Example>
     std::sort(examples.begin(), examples.end());  // according to string sort
     m_listModel->setStringList(examples);  //Sets the model's internal string list to strings. The model will notify any attached views that its underlying data has changed.
 
@@ -84,8 +89,8 @@ MainWidget::MainWidget(QWidget *parent)
 
     setMouseTracking(true);
 
-    qApp->setApplicationDisplayName(tr("SemiCL - NCAMCQ"));
-    qApp->setWindowIcon(QIcon(":/main.ico"));  //icon in topleft of main window. the icon file in the qrc
+    //qApp->setApplicationDisplayName(tr("SemiCL - NCAMCQ"));
+    //qApp->setWindowIcon(QIcon(":/main.ico"));  //icon in topleft of main window. the icon file in the qrc
 
 }
 
@@ -135,6 +140,12 @@ void MainWidget::setActiveExample(Example example) //constructor call once, and 
     m_activeWidget->setVisible(true);
 }
 
+void MainWidget::doMatlabDone(const QString info, const FigureData figure_datatablemap)
+{
+    m_datatableMap = figure_datatablemap;
+    setActiveExample(m_exampleMap[examples[0]]);
+    setMouseTracking(true);
+}
 
 
 MainWidget::~MainWidget()

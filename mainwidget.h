@@ -1,4 +1,9 @@
-﻿#ifndef MAINWIDGET_H
+﻿/*******************************************************************
+* This file was created in Chongqing in 2023-09-09 22:30:39.       *
+* Written by Yun-Jie Liu.                                          *
+* <email: liu.yunjie@qq.com>                                       *
+********************************************************************/
+#ifndef MAINWIDGET_H
 #define MAINWIDGET_H
 
 #include <QHash>
@@ -42,5 +47,11 @@ private:
     //call dll
     FigureData m_datatableMap;
     //FigureData generateFigureData() const;
+
+    QStringList examples;  // let examples be member
+
+public slots:
+    void doMatlabDone(const QString info, const FigureData figure_datatablemap);
+
 };
 #endif // MAINWIDGET_H

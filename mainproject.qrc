@@ -1,5 +1,12 @@
 <RCC>
     <qresource prefix="/">
         <file>main.ico</file>
+        <file>imgs/gears-60.png</file>
+        <file>imgs/exit-90.png</file>
+        <file>imgs/formula-color-fx-96.png</file>
+        <file>imgs/formula-fx-100.png</file>
+        <file>imgs/sort-green-right-90.png</file>
+        <file>imgs/chart-90.png</file>
+        <file>imgs/notifications-90.png</file>
     </qresource>
 </RCC>
