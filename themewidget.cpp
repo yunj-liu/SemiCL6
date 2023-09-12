@@ -274,8 +274,8 @@ QChart *ThemeWidget::createF1Chart(DataTable* figure_datatable) const
     }
 
     chart->createDefaultAxes();  //based on series
-    chart->axes(Qt::Horizontal).first()->setRange(-30, 30);  //Horizontal range
-    chart->axes(Qt::Vertical).first()->setRange(-0.1, 0.04);  //Vertical range
+    //chart->axes(Qt::Horizontal).first()->setRange(-30, 30);  //Horizontal range
+    //chart->axes(Qt::Vertical).first()->setRange(-0.1, 0.04);  //Vertical range
     // Add space to label to add space between labels and axis
     auto axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).first());
     Q_ASSERT(axisY);
@@ -313,8 +313,8 @@ QChart *ThemeWidget::createF2Chart(DataTable* figure_datatable) const
     }
 
     chart->createDefaultAxes();
-    chart->axes(Qt::Horizontal).first()->setRange(0, 0.08);  //Horizontal range
-    chart->axes(Qt::Vertical).first()->setRange(1.2, 1.8);  //Vertical range
+    //chart->axes(Qt::Horizontal).first()->setRange(0, 0.08);  //Horizontal range
+    //chart->axes(Qt::Vertical).first()->setRange(1.2, 1.8);  //Vertical range
     // Add space to label to add space between labels and axis
     auto axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).first());
     Q_ASSERT(axisY);
@@ -355,8 +355,8 @@ QChart *ThemeWidget::createF3Chart(DataTable* figure_datatable) const
     }
 
     chart->createDefaultAxes();
-    chart->axes(Qt::Horizontal).first()->setRange(0, 0.08);  //Horizontal range
-    chart->axes(Qt::Vertical).first()->setRange(-120, 20);  //Vertical range
+    //chart->axes(Qt::Horizontal).first()->setRange(0, 0.08);  //Horizontal range
+    //chart->axes(Qt::Vertical).first()->setRange(-120, 20);  //Vertical range
     // Add space to label to add space between labels and axis
     auto axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).first());
     Q_ASSERT(axisY);
@@ -395,8 +395,8 @@ QChart *ThemeWidget::createF4Chart(DataTable* figure_datatable) const
     }
 
     chart->createDefaultAxes();
-    chart->axes(Qt::Horizontal).first()->setRange(850, 1150);  //Horizontal range
-    chart->axes(Qt::Vertical).first()->setRange(-2000, 3000);  //Vertical range
+    //chart->axes(Qt::Horizontal).first()->setRange(850, 1150);  //Horizontal range
+    //chart->axes(Qt::Vertical).first()->setRange(-2000, 3000);  //Vertical range
     // Add space to label to add space between labels and axis
     auto axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).first());
     Q_ASSERT(axisY);
@@ -436,8 +436,8 @@ QChart *ThemeWidget::createF5Chart(DataTable* figure_datatable) const
     }
 
     chart->createDefaultAxes();
-    chart->axes(Qt::Horizontal).first()->setRange(850, 1150);  //Horizontal range
-    chart->axes(Qt::Vertical).first()->setRange(0, 100);       //Vertical range
+    //chart->axes(Qt::Horizontal).first()->setRange(850, 1150);  //Horizontal range
+    //chart->axes(Qt::Vertical).first()->setRange(0, 100);       //Vertical range
     // Add space to label to add space between labels and axis
     auto axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).first());
     Q_ASSERT(axisY);
@@ -499,8 +499,8 @@ QChart *ThemeWidget::createF6Chart(DataTable* figure_datatable) const
     // .y() get second value in QPointF
 
     chart->createDefaultAxes();
-    chart->axes(Qt::Horizontal).first()->setRange(0, 4800);  //Horizontal range
-    chart->axes(Qt::Vertical).first()->setRange(0, 4.5);       //Vertical range
+    //chart->axes(Qt::Horizontal).first()->setRange(0, 4800);  //Horizontal range
+    //chart->axes(Qt::Vertical).first()->setRange(0, 4.5);       //Vertical range
     // Add space to label to add space between labels and axis
     auto axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).first());
     Q_ASSERT(axisY);
@@ -546,8 +546,8 @@ QChart *ThemeWidget::createF7Chart(DataTable* figure_datatable) const
     }
 
     chart->createDefaultAxes();
-    chart->axes(Qt::Horizontal).first()->setRange(850, 1150);  //Horizontal range
-    chart->axes(Qt::Vertical).first()->setRange(0, 25);       //Vertical range
+    //chart->axes(Qt::Horizontal).first()->setRange(850, 1150);  //Horizontal range
+    //chart->axes(Qt::Vertical).first()->setRange(0, 25);       //Vertical range
     // Add space to label to add space between labels and axis
     auto axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).first());
     Q_ASSERT(axisY);

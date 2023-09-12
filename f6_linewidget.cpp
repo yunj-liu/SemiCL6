@@ -54,8 +54,8 @@ F6_LineWidget::F6_LineWidget(QWidget *parent, DataTable* figure_datatable) : Con
     // .y() get second value in QPointF
 
     chart->createDefaultAxes();
-    chart->axes(Qt::Horizontal).first()->setRange(0, 4800);  //Horizontal range
-    chart->axes(Qt::Vertical).first()->setRange(0, 4.5);       //Vertical range
+    //chart->axes(Qt::Horizontal).first()->setRange(0, 4800);  //Horizontal range
+    //chart->axes(Qt::Vertical).first()->setRange(0, 4.5);       //Vertical range
     // Add space to label to add space between labels and axis
     auto axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).first());
     Q_ASSERT(axisY);

@@ -31,8 +31,8 @@ F2_LineWidget::F2_LineWidget(QWidget *parent, DataTable* figure_datatable) : Con
     }
 
     chart->createDefaultAxes();
-    chart->axes(Qt::Horizontal).first()->setRange(0, 0.08);  //Horizontal range
-    chart->axes(Qt::Vertical).first()->setRange(1.2, 1.8);  //Vertical range
+    //chart->axes(Qt::Horizontal).first()->setRange(0, 0.08);  //Horizontal range
+    //chart->axes(Qt::Vertical).first()->setRange(1.2, 1.8);  //Vertical range
     // Add space to label to add space between labels and axis
     auto axisY = qobject_cast<QValueAxis *>(chart->axes(Qt::Vertical).first());
     Q_ASSERT(axisY);

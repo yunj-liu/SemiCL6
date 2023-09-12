@@ -14,6 +14,7 @@
 #include <QButtonGroup>
 #include <QDir>
 #include <QSettings>
+#include <QFile>
 
 SetParamWidget::SetParamWidget(QWidget *parent)
     : QWidget{parent}
@@ -206,10 +207,10 @@ SetParamWidget::SetParamWidget(QWidget *parent)
     // read ini
     QString currend_path(QDir::currentPath());
     QString sPathName = currend_path + "/option.ini";
-    QSettings *m_IniFile = nullptr;
-    m_IniFile = new QSettings(sPathName, QSettings::IniFormat);
-    if(m_IniFile!=nullptr)  //cannot use if(!m_IniFile)
-    {
+    QFile file;
+    file.setFileName(sPathName);
+    if(file.exists()){
+        QSettings *m_IniFile = new QSettings(sPathName, QSettings::IniFormat);  //cant use m_IniFile!=nullptr judge file exist or not
         m_IniFile->beginGroup(QString("lineedit"));
         lineedit1->setText(m_IniFile->value(QString("dLamda")).toString());
         lineedit2->setText(m_IniFile->value(QString("dT")).toString());
