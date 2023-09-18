@@ -120,10 +120,16 @@ FigureData CommonControl::generateFigureData(double(*pArrInParams)[12]){
     //figure5 array
     mwArray matrix_f5_x(1, 301, mxDOUBLE_CLASS, mxREAL);
     mwArray matrix_f5_ref(1, 301, mxDOUBLE_CLASS, mxREAL);
+
     //figure6 array
-    mwArray matrix_f6_x(1, 9252, mxDOUBLE_CLASS, mxREAL);
-    mwArray matrix_f6_YYy(1, 9252, mxDOUBLE_CLASS, mxREAL);
+    //mwArray matrix_f6_x(1, 9252, mxDOUBLE_CLASS, mxREAL);
+    //mwArray matrix_f6_YYy(1, 9252, mxDOUBLE_CLASS, mxREAL);
+    //mwArray matrix_f6_mm1(1, 1, mxDOUBLE_CLASS, mxREAL);
+    mwArray matrix_f6_x(mxDOUBLE_CLASS);  //The number of rows and columns is uncertain
+    mwArray matrix_f6_YYy(mxDOUBLE_CLASS);
     mwArray matrix_f6_mm1(1, 1, mxDOUBLE_CLASS, mxREAL);
+
+
     //figure7 array
     mwArray matrix_f7_x(1, 301, mxDOUBLE_CLASS, mxREAL);
     mwArray matrix_f7_TT(1, 301, mxDOUBLE_CLASS, mxREAL);
@@ -145,7 +151,11 @@ FigureData CommonControl::generateFigureData(double(*pArrInParams)[12]){
                 //below, the 23 param is the In params
                 matrix_inParams
                 );
+    //test
+    //qDebug() << *s1;
+    //qDebug() << s1[1];
 
+    //end of test
     int listCount(0);
     int valueCount(0);
 
@@ -248,11 +258,14 @@ FigureData CommonControl::generateFigureData(double(*pArrInParams)[12]){
     datatableMap.insert(QString("figure5"), datatable_figure5);
 
     //figure 6
+    mwSize elems = matrix_f6_x.NumberOfElements();
     mwArray* f6_p[2];
     f6_p[0] = &matrix_f6_YYy;
     f6_p[1] = &matrix_f6_mm1;  //pass by a single number
     listCount = 2;
-    valueCount = 9252;
+    //valueCount = 9252;
+    valueCount = (int)elems;
+
     DataTable datatable_figure6;
     for (int i(0); i < listCount; i++) {
         DataList dataList;

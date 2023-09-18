@@ -146,4 +146,5 @@ void CalcWidget::doMatlabDone(const QString info, const FigureData figure_datata
     qDebug() << info;
     m_calcDone = true;
     close();
+    close();
 }

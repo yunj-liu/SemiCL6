@@ -1,6 +1,6 @@
 07SemiCL6
 template choose Qt Widgets Application
-Build Syste choose CMake
+Build System choose CMake
 Class name:MainWidget, Base class choose QWidget, uncheck Generate form checkbox
 Kit choose MSVC2019
 VCS git

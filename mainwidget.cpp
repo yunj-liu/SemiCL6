@@ -145,6 +145,7 @@ void MainWidget::doMatlabDone(const QString info, const FigureData figure_datata
     m_datatableMap = figure_datatablemap;
     setActiveExample(m_exampleMap[examples[0]]);
     setMouseTracking(true);
+    qDebug() << "MainWidget::doMatlabDone";
 }
 
 
