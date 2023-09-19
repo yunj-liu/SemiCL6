@@ -19,8 +19,12 @@ class MainWidget : public QWidget
     Q_OBJECT
 
 public:
-    explicit MainWidget(QWidget *parent = nullptr);
+    explicit MainWidget(QWidget *parent = nullptr, QChart::ChartTheme ct = QChart::ChartThemeLight, QChart::AnimationOption ao = QChart::NoAnimation);
     ~MainWidget();
+    void refershChartThemes();
+    int getListviewCurrentIndex();
+    void setActiveWithIndex(int index=0, QChart::ChartTheme ct=QChart::ChartThemeLight, QChart::AnimationOption ao = QChart::NoAnimation);
+
 
 protected:
     void resizeEvent(QResizeEvent *) override;
@@ -37,8 +41,7 @@ private:
         F7_LineChart
     };
 
-    void setActiveExample(Example example);
-
+    void setActiveExample(Example example);  //no ct param, use m_ct
     QListView *m_listView = nullptr;
     QStringListModel *m_listModel = nullptr;
     QWidget *m_contentArea = nullptr;
@@ -49,6 +52,8 @@ private:
     //FigureData generateFigureData() const;
 
     QStringList examples;  // let examples be member
+    QChart::ChartTheme m_ct = QChart::ChartThemeLight;
+    QChart::AnimationOption m_ao = QChart::NoAnimation;
 
 public slots:
     void doMatlabDone(const QString info, const FigureData figure_datatablemap);

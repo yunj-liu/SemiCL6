@@ -55,8 +55,8 @@ set(PROJECT_SOURCES
     commoncontrol.h
     mainwindow.cpp
     mainwindow.h
-    ltoolbar.cpp
-    ltoolbar.h
+    ltoolbar1.cpp
+    ltoolbar1.h
     setparamwidget.cpp
     setparamwidget.h
     calcwidget.cpp

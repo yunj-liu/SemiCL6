@@ -10,6 +10,9 @@
 #include <QChart>
 #include <QChartView>
 #include "commoncontrol.h"
+#include <QGroupBox>
+#include <QLineEdit>
+#include <QRadioButton>
 
 QT_FORWARD_DECLARE_CLASS(Ui_ThemeWidgetForm);  //the name 'ThemeWidgetForm' is pick up when design ui,*.ui open with plain editor can watch it
 
@@ -44,6 +47,38 @@ private:
     QChart *createF5Chart(DataTable* figure_datatable = nullptr) const;
     QChart *createF6Chart(DataTable* figure_datatable = nullptr) const;
     QChart *createF7Chart(DataTable* figure_datatable = nullptr) const;
+
+    //8
+    QLineEdit *lineedit1;
+    QLineEdit *lineedit2;
+    QLineEdit *lineedit3;
+    QLineEdit *lineedit4;
+    QLineEdit *lineedit5;
+    QLineEdit *lineedit6;
+
+    QRadioButton *radiog41;
+    QRadioButton *radiog42;
+    QRadioButton *radiog43;
+    QRadioButton *radiog51;
+    QRadioButton *radiog52;
+    QRadioButton *radiog61;
+    QRadioButton *radiog62;
+    QRadioButton *radiog63;
+    QRadioButton *radiog71;
+    QRadioButton *radiog72;
+    QRadioButton *radiog73;
+    QRadioButton *radiog81;
+    QRadioButton *radiog82;
+    QRadioButton *radiog83;
+    QRadioButton *radiog91;
+    QRadioButton *radiog92;
+
+    QButtonGroup *btnGroup4;
+    QButtonGroup *btnGroup5;
+    QButtonGroup *btnGroup6;
+    QButtonGroup *btnGroup7;
+    QButtonGroup *btnGroup8;
+    QButtonGroup *btnGroup9;
 
 
 private:

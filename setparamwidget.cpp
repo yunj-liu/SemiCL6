@@ -16,13 +16,14 @@
 #include <QSettings>
 #include <QFile>
 
-SetParamWidget::SetParamWidget(QWidget *parent)
+SetParamWidget::SetParamWidget(QWidget *parent, MainWidget *pMainWidget)
     : QWidget{parent}
-{
+{ 
     setWindowModality(Qt::ApplicationModal);
     setWindowFlags(windowFlags() & ~Qt::WindowMinMaxButtonsHint);
     setWindowTitle(QString("设置运算参数"));
     setWindowIcon(QIcon(":/imgs/formula-color-fx-96.png"));
+    m_pMainWidget = pMainWidget;
 
     //Row 1
     QGroupBox *topinputGroupBox1 = new QGroupBox(QString("输入参数1"));
@@ -35,8 +36,8 @@ SetParamWidget::SetParamWidget(QWidget *parent)
     layout_g1v2->addWidget(lineedit1);
     layout_g1v2->addWidget(lineedit2);
     QVBoxLayout *layout_g1v3 = new QVBoxLayout;
-    layout_g1v3->addWidget(new QLabel(QString("nm(0~2000)")));
-    layout_g1v3->addWidget(new QLabel(QString("K(-200~500)")));
+    layout_g1v3->addWidget(new QLabel(QString("nm(850~1200)")));
+    layout_g1v3->addWidget(new QLabel(QString("K(250~350)")));
     QHBoxLayout *layout_g1h = new QHBoxLayout;
     layout_g1h->addLayout(layout_g1v1);
     layout_g1h->addLayout(layout_g1v2);
@@ -53,8 +54,8 @@ SetParamWidget::SetParamWidget(QWidget *parent)
     layout_g2v2->addWidget(lineedit3);
     layout_g2v2->addWidget(lineedit4);
     QVBoxLayout *layout_g2v3 = new QVBoxLayout;
-    layout_g2v3->addWidget(new QLabel(QString("W(0~1000)")));
-    layout_g2v3->addWidget(new QLabel(QString("um(0~1000)")));
+    layout_g2v3->addWidget(new QLabel(QString("W(0~100)")));
+    layout_g2v3->addWidget(new QLabel(QString("um(100~500)")));
     QHBoxLayout *layout_g2h = new QHBoxLayout;
     layout_g2h->addLayout(layout_g2v1);
     layout_g2h->addLayout(layout_g2v2);
@@ -76,8 +77,8 @@ SetParamWidget::SetParamWidget(QWidget *parent)
     layout_g3v2->addWidget(lineedit5);
     layout_g3v2->addWidget(lineedit6);
     QVBoxLayout *layout_g3v3 = new QVBoxLayout;
-    layout_g3v3->addWidget(new QLabel(QString("个(0~50)")));
-    layout_g3v3->addWidget(new QLabel(QString("nm(0~20)")));
+    layout_g3v3->addWidget(new QLabel(QString("个(5~20)")));
+    layout_g3v3->addWidget(new QLabel(QString("nm(5~20)")));
     QHBoxLayout *layout_g3h = new QHBoxLayout;
     layout_g3h->addLayout(layout_g3v1);
     layout_g3h->addLayout(layout_g3v2);
@@ -126,6 +127,9 @@ SetParamWidget::SetParamWidget(QWidget *parent)
     btnGroup6->addButton(radiog61, 1);
     btnGroup6->addButton(radiog62, 2);
     btnGroup6->addButton(radiog63, 3);
+    radiog62->setCheckable(false);
+    radiog63->setCheckable(false);
+
     QHBoxLayout *layout_g6h = new QHBoxLayout;
     layout_g6h->addWidget(radiog61);
     layout_g6h->addWidget(radiog62);
@@ -251,7 +255,6 @@ SetParamWidget::SetParamWidget(QWidget *parent)
         btnGroup9->button(0)->setChecked(true);
     }
 
-
     connect(buttonBox, SIGNAL(accepted()), this, SLOT(setParamOk()));
     connect(buttonBox, SIGNAL(rejected()), this, SLOT(setParamCancel()));
 
@@ -279,43 +282,43 @@ void SetParamWidget::setParamOk()
     */
     bool valid = false;
     //lineedit1
-    double dLamda = lineedit1->text().toDouble(&valid);  //Laser wavelength. 0-2000 double
+    double dLamda = lineedit1->text().toDouble(&valid);  //Laser wavelength. 850-1200 double
     if(!valid){
         lineedit1->setFocus();
         lineedit1->selectAll();
         return;
     }
-    if(dLamda < 0){
+    if(dLamda < 850){
         lineedit1->setFocus();
         lineedit1->selectAll();
         return;
     }
-    if(dLamda > 2000){
+    if(dLamda > 1200){
         lineedit1->setFocus();
         lineedit1->selectAll();
         return;
     }
 
     //lineedit2
-    double dT = lineedit2->text().toDouble(&valid);  //operating temperature. -200~500 double.
+    double dT = lineedit2->text().toDouble(&valid);  //operating temperature. 250~350 double.
     if(!valid){
         lineedit2->setFocus();
         lineedit2->selectAll();
         return;
     }
-    if(dT < -200){
+    if(dT < 250){
         lineedit2->setFocus();
         lineedit2->selectAll();
         return;
     }
-    if(dT > 500){
+    if(dT > 350){
         lineedit2->setFocus();
         lineedit2->selectAll();
         return;
     }
 
     //lineedit3
-    double dPpump = lineedit3->text().toDouble(&valid);  //pumping power. 0~1000 double.
+    double dPpump = lineedit3->text().toDouble(&valid);  //pumping power. 0~100 double.
     if(!valid){
         lineedit3->setFocus();
         lineedit3->selectAll();
@@ -326,56 +329,56 @@ void SetParamWidget::setParamOk()
         lineedit3->selectAll();
         return;
     }
-    if(dPpump > 1000){
+    if(dPpump > 100){
         lineedit3->setFocus();
         lineedit3->selectAll();
         return;
     }
 
     //lineedit4
-    double dDpump = lineedit4->text().toDouble(&valid);  //Pump spot diameter. 0~1000 double.
+    double dDpump = lineedit4->text().toDouble(&valid);  //Pump spot diameter. 100~500 double.
     if(!valid){
         lineedit4->setFocus();
         lineedit4->selectAll();
         return;
     }
-    if(dDpump < 0){
+    if(dDpump < 100){
         lineedit4->setFocus();
         lineedit4->selectAll();
         return;
     }
-    if(dDpump > 1000){
+    if(dDpump > 500){
         lineedit4->setFocus();
         lineedit4->selectAll();
         return;
     }
 
     //lineedit5
-    double dNwell = (double)lineedit5->text().toInt(&valid);  //Number of quantum Wells. 0~50. int
+    double dNwell = (double)lineedit5->text().toInt(&valid);  //Number of quantum Wells. 5~20. int
     if(!valid){
         lineedit5->setFocus();
         lineedit5->selectAll();
         return;
     }
-    if(dNwell < 0){
+    if(dNwell < 5){
         lineedit5->setFocus();
         lineedit5->selectAll();
         return;
     }
-    if(dNwell > 50){
+    if(dNwell > 20){
         lineedit5->setFocus();
         lineedit5->selectAll();
         return;
     }
 
     //lineedit6
-    double dDwell = (double)lineedit6->text().toInt(&valid);  //Quantum well thickness. 0~20. int
+    double dDwell = (double)lineedit6->text().toInt(&valid);  //Quantum well thickness. 5~20. int
     if(!valid){
         lineedit6->setFocus();
         lineedit6->selectAll();
         return;
     }
-    if(dDwell < 0){
+    if(dDwell < 5){
         lineedit6->setFocus();
         lineedit6->selectAll();
         return;
@@ -415,6 +418,8 @@ void SetParamWidget::setParamOk()
     m_IniFile->setValue(QString("dCompensation"), QString::number(dCompensation));
     m_IniFile->endGroup();
 
+    //fresh mainwidget
+    m_pMainWidget->refershChartThemes();
 
     this->close();
 }

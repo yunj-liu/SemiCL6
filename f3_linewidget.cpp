@@ -7,10 +7,14 @@
 #include <QLineSeries>
 #include <QValueAxis>
 
-F3_LineWidget::F3_LineWidget(QWidget *parent, DataTable* figure_datatable) : ContentWidget(parent)
+F3_LineWidget::F3_LineWidget(QWidget *parent, DataTable* figure_datatable, QChart::ChartTheme ct, QChart::AnimationOption ao) : ContentWidget(parent)
 {
     auto chart = new QChart;
     chart->setTitle("Fig.3 价带空穴能量色散关系");
+    //set theme
+    chart->setTheme(ct);
+    //set animation option
+    chart->setAnimationOptions(ao);
 
     QString name("HH");  //first three is begin of 'HH', last one begin of 'LH'
     int nameIndex = 1;

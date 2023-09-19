@@ -7,10 +7,14 @@
 #include <QLineSeries>
 #include <QValueAxis>
 
-F5_LineWidget::F5_LineWidget(QWidget *parent, DataTable* figure_datatable) : ContentWidget(parent)
+F5_LineWidget::F5_LineWidget(QWidget *parent, DataTable* figure_datatable, QChart::ChartTheme ct, QChart::AnimationOption ao) : ContentWidget(parent)
 {
     auto chart = new QChart;
     chart->setTitle("Fig.5 DBR反射谱");
+    //set theme
+    chart->setTheme(ct);
+    //set animation option
+    chart->setAnimationOptions(ao);
 
     //QString name("HH");  //first three is begin of 'HH', last one begin of 'LH'
     //int nameIndex = 1;

@@ -7,10 +7,14 @@
 #include <QLineSeries>
 #include <QValueAxis>
 
-F6_LineWidget::F6_LineWidget(QWidget *parent, DataTable* figure_datatable) : ContentWidget(parent)
+F6_LineWidget::F6_LineWidget(QWidget *parent, DataTable* figure_datatable, QChart::ChartTheme ct, QChart::AnimationOption ao) : ContentWidget(parent)
 {
     auto chart = new QChart;
     chart->setTitle("Fig.6 增益芯片内部驻波场电场分布");
+    //set theme
+    chart->setTheme(ct);
+    //set animation option
+    chart->setAnimationOptions(ao);
 
     /*
     //QString name("HH");  //first three is begin of 'HH', last one begin of 'LH'

@@ -11,12 +11,13 @@
 #include <QGroupBox>
 #include <QLineEdit>
 #include <QRadioButton>
+#include "mainwidget.h"
 
 class SetParamWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit SetParamWidget(QWidget *parent = nullptr);
+    explicit SetParamWidget(QWidget *parent = nullptr, MainWidget *pMainWidget = nullptr);
 
 private:
     QLineEdit *lineedit1;
@@ -49,6 +50,8 @@ private:
     QButtonGroup *btnGroup7;
     QButtonGroup *btnGroup8;
     QButtonGroup *btnGroup9;
+
+    MainWidget *m_pMainWidget = nullptr;
 
 private slots:
     void setParamOk();

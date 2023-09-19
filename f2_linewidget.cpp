@@ -7,10 +7,14 @@
 #include <QLineSeries>
 #include <QValueAxis>
 
-F2_LineWidget::F2_LineWidget(QWidget *parent, DataTable* figure_datatable) : ContentWidget(parent)
+F2_LineWidget::F2_LineWidget(QWidget *parent, DataTable* figure_datatable, QChart::ChartTheme ct, QChart::AnimationOption ao) : ContentWidget(parent)
 {
     auto chart = new QChart;
     chart->setTitle("Fig.2 导带电子能量色散关系");
+    //set theme
+    chart->setTheme(ct);
+    //set animation option
+    chart->setAnimationOptions(ao);
 
     QString name("C");
     int nameIndex = 1;

@@ -3,20 +3,28 @@
 * Written by Yun-Jie Liu.                                          *
 * <email: liu.yunjie@qq.com>                                       *
 ********************************************************************/
-#ifndef LTOOLBAR_H
-#define LTOOLBAR_H
+#ifndef LTOOLBAR1_H
+#define LTOOLBAR1_H
 
 #include <QToolBar>
+#include "mainwindow.h"
 
-class LToolBar : public QToolBar
+class LToolBar1 : public QToolBar
 {
     Q_OBJECT
 public:
-    explicit LToolBar(const QString &title, QMainWindow *mainWindow);
+    explicit LToolBar1(const QString &title, MainWindow *mainWindow);
 
 private:
     QAction *mSetCalcParamAction;
+    QAction *mCalcAction;
+    QAction *mResetAction;
+    QAction *mRightarrowAction;
+    QAction *mLeftarrowAction;
+    QAction *mSep1;
+    QAction *mInfoAction;
+    QAction *mExitAction;
 
 };
 
-#endif // LTOOLBAR_H
+#endif // LTOOLBAR1_H

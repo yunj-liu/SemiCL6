@@ -8,5 +8,10 @@
         <file>imgs/sort-green-right-90.png</file>
         <file>imgs/chart-90.png</file>
         <file>imgs/notifications-90.png</file>
+        <file>imgs/update-left-rotation-64.png</file>
+        <file>imgs/left-60.png</file>
+        <file>imgs/right-60.png</file>
+        <file>imgs/mechanistic-analysis-60.png</file>
+        <file>imgs/info-60.png</file>
     </qresource>
 </RCC>

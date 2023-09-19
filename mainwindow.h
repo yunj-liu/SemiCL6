@@ -11,7 +11,7 @@
 #include "setparamwidget.h"
 #include "calcwidget.h"
 
-class LToolBar;
+class LToolBar1;
 
 class MainWindow : public QMainWindow
 {
@@ -26,19 +26,45 @@ public slots:
     void switchLayoutDirection();
     void setCalcParams();
     void matlabCalc();
+    void resetCalcParams();
+    void chooseTheme();
+    void chooseAnimations();
+    void nextFigure();
+    void upFigure();
 
 private:
     void createMenuBar();
     void createToolBar();
+    void generateSetupMenu(QMenu *pSetupMenu=nullptr);
 
     QMenu *mpFileMenu = nullptr;
     QMenu *mpCalcMenu = nullptr;
     QMenu *mpSetupMenu = nullptr;
     QMenu *mpDataSaveMenu = nullptr;
     QMenu *mpAboutMenu = nullptr;
-    QList<LToolBar*> toolBars;
+    QList<LToolBar1*> toolBars;
     SetParamWidget *p_setparamW;
     CalcWidget *p_calcW;
+
+    QActionGroup *m_themeActions = nullptr;
+    QAction *m_lightAction = nullptr;
+    QAction *m_blueCeruleanAction = nullptr;
+    QAction *m_darkAction = nullptr;
+    QAction *m_brownSandAction = nullptr;
+    QAction *m_blueNCSAction = nullptr;
+    QAction *m_highContrastAction = nullptr;
+    QAction *m_blueIcyAction = nullptr;
+    QAction *m_contrastAction = nullptr;
+
+    QChart::ChartTheme m_ct = QChart::ChartThemeLight;
+
+    QActionGroup *m_animationActions = nullptr;
+    QAction *m_NoAnimationAction = nullptr;
+    QAction *m_GridAxisAnimationsAction = nullptr;
+    QAction *m_SeriesAnimationsAction = nullptr;
+    QAction *m_AllAnimationsAction = nullptr;
+
+    QChart::AnimationOption m_ao = QChart::NoAnimation;
 
 
 signals:

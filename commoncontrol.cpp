@@ -15,7 +15,7 @@ CommonControl::CommonControl()
 
 }
 
-DataTable CommonControl::getDataTableFromCsvFile(QString filePathName)
+DataTable CommonControl::getDataTableFromCsvFile(QString filePathName)  //CommonControl::getDataTableFromCsvFile(sPathName+"figure"+QString::number(i)+".csv")
 {
     DataTable dt;
     QFile file;
@@ -67,7 +67,7 @@ DataTable CommonControl::getDataTableFromCsvFile(QString filePathName)
     return dt;
 }
 
-FigureData CommonControl::getFigureDataHashMapFromCsvFile(QString sFoldName, int figureNum)
+FigureData CommonControl::getFigureDataHashMapFromCsvFile(QString sFoldName, int figureNum)  //CommonControl::getFigureDataHashMapFromCsvFile("/projdata/", 7)
 {
     FigureData datatableMap;
     if(!sFoldName.startsWith('/')){
@@ -90,7 +90,7 @@ FigureData CommonControl::getFigureDataHashMapFromCsvFile(QString sFoldName, int
     return datatableMap;
 }
 
-FigureData CommonControl::generateFigureData(double(*pArrInParams)[12]){
+FigureData CommonControl::generateFigureData(double(*pArrInParams)[12]){  //call matlab dll
     FigureData datatableMap;
     if (!SemiCL6FuncInitialize()) // DLL Initialize
     {
@@ -307,4 +307,54 @@ FigureData CommonControl::generateFigureData(double(*pArrInParams)[12]){
     datatableMap.insert(QString("figure7"), datatable_figure7);
 
     return datatableMap;
+}
+
+void CommonControl::saveDataTableToCsvFile(QString sPathName, QString sFileName, DataTable& dt)
+{
+    QDir dir(sPathName);
+    if(!dir.exists())
+        dir.mkdir(sPathName);
+    QString filePathName = sPathName + sFileName + ".csv";
+    QFile file;
+    int row, col;
+    row = dt.at(0).count();
+    col = dt.count(); //how many lists, there is how many cols
+    file.setFileName(filePathName);
+    if(file.open(QIODevice::WriteOnly | QIODevice::Text)){  //QIODevice::Append indicate append data
+        QTextStream out(&file);
+        //no head of table
+        for(int i(0); i<row; i++){
+            out << dt.at(0).at(i).first.x() << ",";  //to get x(), fix fetch the first col
+            for(int j(0); j<col; j++){
+                if(dt.at(j).count()>i){  //figure6 last col only have 1 elem
+                    if(j==(col-1))
+                        out << dt.at(j).at(i).first.y() << "\n";   //after last col, there is no comma
+                    else
+                        out << dt.at(j).at(i).first.y() << ",";
+                }
+                else{
+                    if(j==(col-1))
+                        out << "\n";
+                }
+            }
+        }
+        file.close();
+    }
+}
+
+void CommonControl::saveFigureDataHashMapToCsvFile(QString sFoldName, int figureNum, FigureData &fd)  // "/projdata/"
+{
+    if(!sFoldName.startsWith('/')){
+        sFoldName = "/" + sFoldName;
+    }
+    if(!sFoldName.endsWith('/')){
+        sFoldName += "/";
+    }
+    QString sPathName;
+    QString currend_path(QDir::currentPath());
+    sPathName = currend_path + sFoldName;
+
+    for(int i(1); i<=figureNum; i++){
+        saveDataTableToCsvFile(sPathName, QString("figure")+QString::number(i), fd[QString("figure")+QString::number(i)]);
+    }
 }

@@ -19,7 +19,7 @@
 //#include "SemiCL6Func.h"
 //#include <QMessageBox>
 
-MainWidget::MainWidget(QWidget *parent)
+MainWidget::MainWidget(QWidget *parent, QChart::ChartTheme ct, QChart::AnimationOption ao)
     : QWidget(parent)
     , m_listView(new QListView(this))
     , m_listModel(new QStringListModel(this))
@@ -27,6 +27,11 @@ MainWidget::MainWidget(QWidget *parent)
     //, m_datatableMap(CommonControl::generateFigureData())
     , m_datatableMap(CommonControl::getFigureDataHashMapFromCsvFile("/projdata/", 7))
 {
+    //set chart theme
+    m_ct = ct;
+    //set animation option
+    m_ao = ao;
+
     m_exampleMap.insert(tr("Fig.0 总览图"), ChartThemes);
     m_exampleMap.insert(tr("Fig.1 导带电子波函数"), F1_LineChart);  //tr return type is QString
     m_exampleMap.insert(tr("Fig.2 导带电子能量色散关系"), F2_LineChart);
@@ -42,7 +47,7 @@ MainWidget::MainWidget(QWidget *parent)
 
     m_listView->setMaximumWidth(220);  //the QListView in left of window, width is 220
     m_listView->setModel(m_listModel); //set the model for the view to present. model & it's attached view
-    m_listView->setCurrentIndex(m_listModel->index(0));  //the param's type is QModelIndex
+    m_listView->setCurrentIndex(m_listModel->index(0));  //the param's type is QModelIndex. //test:m_listView->selectionModel()->currentIndex()
     m_listView->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     setMinimumSize(800, 400);  // MainWidget's minimum width and height
@@ -99,8 +104,30 @@ void MainWidget::resizeEvent(QResizeEvent *)
     m_activeWidget->resize(m_contentArea->size());
 }
 
+int MainWidget::getListviewCurrentIndex()
+{
+    QModelIndex i =  m_listView->selectionModel()->currentIndex();
+    int r = (int)m_exampleMap[m_listModel->data(i).toString()];
+    return r;
+}
+
+void MainWidget::setActiveWithIndex(int index, QChart::ChartTheme ct, QChart::AnimationOption ao)
+{
+    m_ct = ct;
+    m_ao = ao;
+
+    setActiveExample(m_exampleMap[examples[index]]);
+    m_listView->setCurrentIndex(m_listModel->index(index));
+}
+
 void MainWidget::setActiveExample(Example example) //constructor call once, and being slot function waiting for CurrentChanged signal
 {
+//    QModelIndex ii =  m_listView->selectionModel()->currentIndex();  //0~7
+//    qDebug() << ii;
+//    qDebug() << m_listModel->data(ii).toString();
+//    int aa = m_exampleMap[m_listModel->data(ii).toString()];
+//    qDebug() << aa;
+
     // We only keep one example alive at the time to save resources.
     // This also allows resetting the example by switching to another example and back.
     if (m_activeWidget) {
@@ -113,25 +140,25 @@ void MainWidget::setActiveExample(Example example) //constructor call once, and 
         m_activeWidget = new ThemeWidget(m_contentArea, &m_datatableMap);
         break;
     case F1_LineChart:  //m_contentArea is QWidget, being the parent passing to the LineWidget
-        m_activeWidget = new F1_LineWidget(m_contentArea, &m_datatableMap[tr("figure1")]);  //m_activeWidget is ContentWidget, LineWidget derived from ContentWidget
+        m_activeWidget = new F1_LineWidget(m_contentArea, &m_datatableMap[tr("figure1")], m_ct, m_ao);  //m_activeWidget is ContentWidget, LineWidget derived from ContentWidget
         break;               //parent: m_contentArea(QWidget)->m_contentArea(ConetentWidget)->m_activeWidget(LineWidget)
     case F2_LineChart:
-        m_activeWidget = new F2_LineWidget(m_contentArea, &m_datatableMap[tr("figure2")]);
+        m_activeWidget = new F2_LineWidget(m_contentArea, &m_datatableMap[tr("figure2")], m_ct, m_ao);
         break;
     case F3_LineChart:
-        m_activeWidget = new F3_LineWidget(m_contentArea, &m_datatableMap[tr("figure3")]);
+        m_activeWidget = new F3_LineWidget(m_contentArea, &m_datatableMap[tr("figure3")], m_ct, m_ao);
         break;
     case F4_LineChart:
-        m_activeWidget = new F4_LineWidget(m_contentArea, &m_datatableMap[tr("figure4")]);
+        m_activeWidget = new F4_LineWidget(m_contentArea, &m_datatableMap[tr("figure4")], m_ct, m_ao);
         break;
     case F5_LineChart:
-        m_activeWidget = new F5_LineWidget(m_contentArea, &m_datatableMap[tr("figure5")]);
+        m_activeWidget = new F5_LineWidget(m_contentArea, &m_datatableMap[tr("figure5")], m_ct, m_ao);
         break;
     case F6_LineChart:
-        m_activeWidget = new F6_LineWidget(m_contentArea, &m_datatableMap[tr("figure6")]);
+        m_activeWidget = new F6_LineWidget(m_contentArea, &m_datatableMap[tr("figure6")], m_ct, m_ao);
         break;
     case F7_LineChart:
-        m_activeWidget = new F7_LineWidget(m_contentArea, &m_datatableMap[tr("figure7")]);
+        m_activeWidget = new F7_LineWidget(m_contentArea, &m_datatableMap[tr("figure7")], m_ct, m_ao);
         break;
     }
 
@@ -145,9 +172,17 @@ void MainWidget::doMatlabDone(const QString info, const FigureData figure_datata
     m_datatableMap = figure_datatablemap;
     setActiveExample(m_exampleMap[examples[0]]);
     setMouseTracking(true);
+
+    //write csv
+    CommonControl::saveFigureDataHashMapToCsvFile(QString("/projdata/"), 7, m_datatableMap);
     qDebug() << "MainWidget::doMatlabDone";
 }
 
+void MainWidget::refershChartThemes()
+{
+    m_datatableMap = CommonControl::getFigureDataHashMapFromCsvFile("/projdata/", 7);
+    setActiveExample(m_exampleMap[examples[0]]);
+}
 
 MainWidget::~MainWidget()
 {

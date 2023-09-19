@@ -13,7 +13,7 @@ class F6_LineWidget : public ContentWidget
 {
     Q_OBJECT
 public:
-    F6_LineWidget(QWidget *parent = nullptr, DataTable* figure_datatable = nullptr);
+    F6_LineWidget(QWidget *parent = nullptr, DataTable* figure_datatable = nullptr, QChart::ChartTheme ct=QChart::ChartThemeLight, QChart::AnimationOption ao = QChart::NoAnimation);
 };
 
 #endif // F6_LINEWIDGET_H

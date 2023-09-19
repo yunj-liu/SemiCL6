@@ -7,7 +7,7 @@
 #include <QLineSeries>
 #include <QValueAxis>
 
-F1_LineWidget::F1_LineWidget(QWidget *parent, DataTable* figure_datatable) : ContentWidget(parent)  //parent: QWidget->ConetentWidget->LineWidget
+F1_LineWidget::F1_LineWidget(QWidget *parent, DataTable* figure_datatable, QChart::ChartTheme ct, QChart::AnimationOption ao) : ContentWidget(parent)  //parent: QWidget->ConetentWidget->LineWidget
 {
 
     /*
@@ -39,6 +39,10 @@ F1_LineWidget::F1_LineWidget(QWidget *parent, DataTable* figure_datatable) : Con
 
     auto chart = new QChart;
     chart->setTitle("Fig.1 导带电子波函数");
+    //set theme
+    chart->setTheme(ct);
+    //set animation option
+    chart->setAnimationOptions(ao);
 
     QString name(QString::fromUtf8("\xCF\x88"));  //phi, http://www.kreativekorp.com/charset/unicode/
     int nameIndex = 1;

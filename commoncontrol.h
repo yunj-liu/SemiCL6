@@ -20,6 +20,8 @@ public:
     static DataTable getDataTableFromCsvFile(QString filePathName);
     static FigureData getFigureDataHashMapFromCsvFile(QString sFoldName, int figureNum);
     static FigureData generateFigureData(double(*pArrInParams)[12]);
+    static void saveDataTableToCsvFile(QString sPathName, QString sFileName, DataTable& dt);
+    static void saveFigureDataHashMapToCsvFile(QString sFoldName, int figureNum, FigureData &fd);
 };
 
 #endif // COMMONCONTROL_H
