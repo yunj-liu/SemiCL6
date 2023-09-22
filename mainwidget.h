@@ -24,6 +24,7 @@ public:
     void refershChartThemes();
     int getListviewCurrentIndex();
     void setActiveWithIndex(int index=0, QChart::ChartTheme ct=QChart::ChartThemeLight, QChart::AnimationOption ao = QChart::NoAnimation);
+    FigureData& getFigureData();
 
 
 protected:
@@ -47,6 +48,7 @@ private:
     QWidget *m_contentArea = nullptr;
     ContentWidget *m_activeWidget = nullptr;
     QHash<QString, Example> m_exampleMap;
+
     //call dll
     FigureData m_datatableMap;
     //FigureData generateFigureData() const;

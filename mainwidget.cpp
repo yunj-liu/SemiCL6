@@ -178,6 +178,11 @@ void MainWidget::doMatlabDone(const QString info, const FigureData figure_datata
     qDebug() << "MainWidget::doMatlabDone";
 }
 
+FigureData& MainWidget::getFigureData()
+{
+    return m_datatableMap;
+}
+
 void MainWidget::refershChartThemes()
 {
     m_datatableMap = CommonControl::getFigureDataHashMapFromCsvFile("/projdata/", 7);

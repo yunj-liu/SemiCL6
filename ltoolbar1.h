@@ -22,8 +22,11 @@ private:
     QAction *mRightarrowAction;
     QAction *mLeftarrowAction;
     QAction *mSep1;
-    QAction *mInfoAction;
+    QAction *mAboutAction;
     QAction *mExitAction;
+    QAction *mFiguresSaveAction;
+    QAction *mFiguresSaveasAction;
+
 
 };
 

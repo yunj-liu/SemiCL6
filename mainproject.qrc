@@ -13,5 +13,20 @@
         <file>imgs/right-60.png</file>
         <file>imgs/mechanistic-analysis-60.png</file>
         <file>imgs/info-60.png</file>
+        <file>imgs/save-all-48.png</file>
+        <file>imgs/save-as-94.png</file>
+        <file>imgs/play-94.png</file>
+        <file>imgs/play-60.png</file>
+        <file>imgs/leftarrow-60.png</file>
+        <file>imgs/rightarrow-60.png</file>
+        <file>imgs/back-to-48.png</file>
+        <file>imgs/next-page-48.png</file>
+        <file>imgs/ios-save-60.png</file>
+        <file>imgs/ios-save-as-60.png</file>
+        <file>imgs/about-60.png</file>
+        <file>imgs/blue-about-60.png</file>
+        <file>imgs/logoPic.png</file>
+        <file>imgs/chip-60.png</file>
+        <file>imgs/refraction-48.png</file>
     </qresource>
 </RCC>

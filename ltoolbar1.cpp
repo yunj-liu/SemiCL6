@@ -21,20 +21,29 @@ LToolBar1::LToolBar1(const QString &title, MainWindow *mainWindow)
 
     mSep1 = addSeparator();
 
-    mCalcAction = addAction(QIcon(":/imgs/sort-green-right-90.png"), QString("重新计算"));
+    mCalcAction = addAction(QIcon(":/imgs/play-60.png"), QString("重新计算"));
     connect(mCalcAction, &QAction::triggered, mainWindow, &MainWindow::matlabCalc);
 
     mSep1 = addSeparator();
 
-    mLeftarrowAction = addAction(QIcon(":/imgs/left-60.png"), QString("上一个"));
+    mLeftarrowAction = addAction(QIcon(":/imgs/back-to-48.png"), QString("上一个"));
     connect(mLeftarrowAction, &QAction::triggered, mainWindow, &MainWindow::upFigure);
 
-    mRightarrowAction = addAction(QIcon(":/imgs/right-60.png"), QString("下一个"));
+    mRightarrowAction = addAction(QIcon(":/imgs/next-page-48.png"), QString("下一个"));
     connect(mRightarrowAction, &QAction::triggered, mainWindow, &MainWindow::nextFigure);
 
     mSep1 = addSeparator();
 
-    mInfoAction = addAction(QIcon(":/imgs/info-60.png"), QString("关于"));
+    mFiguresSaveAction = addAction(QIcon(":/imgs/save-all-48.png"), QString("图表数据保存"));
+    connect(mFiguresSaveAction, &QAction::triggered, mainWindow, &MainWindow::figuresSave);
+
+    mFiguresSaveasAction = addAction(QIcon(":/imgs/save-as-94.png"), QString("图表数据另存为"));
+    connect(mFiguresSaveasAction, &QAction::triggered, mainWindow, &MainWindow::figuresSaveAs);
+
+    mSep1 = addSeparator();
+
+    mAboutAction = addAction(QIcon(":/imgs/about-60.png"), QString("关于"));  //color code:#743391
+    connect(mAboutAction, &QAction::triggered, mainWindow, &MainWindow::about);
 
     mSep1 = addSeparator();
 

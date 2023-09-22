@@ -14,14 +14,15 @@
 #include <QSettings>
 #include <QFile>
 #include <QActionGroup>
+#include <QFileDialog>
 
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow{parent}
 {
-    //qApp->setApplicationDisplayName(tr("SemiCL - NCAMCQ"));  //instead of setWindowTitle
+    //qApp->setApplicationDisplayName(tr("半导体激光器芯片设计软件 SemiCL V1.0 - NCAMCQ"));  //instead of setWindowTitle
     setObjectName("MainWindow");
-    setWindowTitle("SemiCL - NCAMCQ");
+    setWindowTitle("半导体激光器芯片设计软件 SemiCL V1.0 - NCAMCQ");
 
     createMenuBar();
     createToolBar();
@@ -30,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent)
     m_pMainWidget = new MainWidget(this, m_ct, m_ao);
     setCentralWidget(m_pMainWidget);
 
-    statusBar()->showMessage(QString("启动."));
+    statusBar()->showMessage(QString("已启动."), 3000);
 
 }
 
@@ -57,10 +58,93 @@ void MainWindow::createMenuBar()
 
     //DataSave Menu
     mpDataSaveMenu = menuBar()->addMenu(QString("数据保存(&D)"));
+    mpDataSaveMenu->addAction(QIcon(":/imgs/ios-save-60.png"), QString("图表数据保存..."), this, &MainWindow::figuresSave);
+    mpDataSaveMenu->addAction(QIcon(":/imgs/ios-save-as-60.png"), QString("图表数据另存为..."), this, &MainWindow::figuresSaveAs);
+
+    //Report menu
+    mpReportMenu = menuBar()->addMenu(QString("设计报告(&R)"));
+    mpReportMenu->addAction(QIcon(":/imgs/chip-60.png"), QString("芯片外延结构"), this, &MainWindow::epitaxyStruct);
+    mpReportMenu->addAction(QIcon(":/imgs/refraction-48.png"), QString("外延材料折射率"), this, &MainWindow::refractiveIndex);
 
     //About Menu
     mpAboutMenu = menuBar()->addMenu(QString("关于(&A)"));
+    mpAboutMenu->addAction(QIcon(":/imgs/blue-about-60.png"), QString("关于..."), this, &MainWindow::about);
 
+}
+
+void MainWindow::refractiveIndex()
+{
+    p_refracIdxW = new RefracIdxWidget();
+    p_refracIdxW->show();
+
+}
+
+void MainWindow::epitaxyStruct()
+{
+    p_epStructW = new EpStructWidget();
+    p_epStructW->show();
+}
+
+void MainWindow::about()
+{
+    p_aboutW = new AboutWidget();
+    p_aboutW->show();
+}
+
+void MainWindow::figuresSave()
+{
+    if(m_figureSavePathName.isEmpty()){
+        figuresSaveAs();
+    }
+    else{
+        FigureData& fd = m_pMainWidget->getFigureData();
+        qDebug()<< m_figureSavePathName;
+        for(int i(1); i<=7; i++){
+            CommonControl::saveDataTableToCsvFile(m_figureSavePathName, QString("figure")+QString::number(i), fd[QString("figure")+QString::number(i)]);
+        }
+        statusBar()->showMessage(QString("数据已保存. 图表1-7数据已保存至")+m_figureSavePathName, 5000);
+    }
+
+}
+
+void MainWindow::figuresSaveAs()
+{
+    statusBar()->showMessage(QString("请选择要保存图表1-7数据文件的位置"));
+
+    //QString fileName = QFileDialog::getSaveFileName(this, QString("Save File"), QDir::homePath());
+    QFileDialog *fileDialog;
+    if(m_figureSavePathName.isEmpty())
+        fileDialog = new QFileDialog(this, QString("请选择保存数据文件的位置"), QDir::homePath());
+    else
+        fileDialog = new QFileDialog(this, QString("请选择保存数据文件的位置"), m_figureSavePathName);
+    fileDialog->setFileMode(QFileDialog::Directory);
+
+    /*fileDialog->exec();  //if use this way,then if clcik cancel button or close dialog also still get selectedFiles, get the path
+    QStringList selectDir = fileDialog->selectedFiles();
+    if (selectDir.size()>0){
+        qDebug() << selectDir.size();
+        qDebug() << "Dir Path:" << selectDir.at(0);
+    }*/
+
+    QString sPathName = fileDialog->getExistingDirectory();  // if clcik cacel button or close dialog, will get the empty string ""
+    //qDebug() << sPath;  //the string of sPath has no end slash
+
+    if(!sPathName.isEmpty())
+    {
+        //qDebug() << "not empty";
+        FigureData& fd = m_pMainWidget->getFigureData();  //get the FigureData
+        if(!sPathName.endsWith('/')){
+            sPathName += "/";
+        }
+        m_figureSavePathName = sPathName;  //if sPathName is not empty, save path in m_figureSavePathName
+        for(int i(1); i<=7; i++){
+            CommonControl::saveDataTableToCsvFile(sPathName, QString("figure")+QString::number(i), fd[QString("figure")+QString::number(i)]);
+        }
+        statusBar()->showMessage(QString("数据已保存. 图表1-7数据已保存至")+sPathName, 3000);
+    }
+    else{
+        statusBar()->showMessage(QString("位置路径为空."), 3000);
+    }
 }
 
 void MainWindow::generateSetupMenu(QMenu *pSetupMenu)

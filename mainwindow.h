@@ -10,6 +10,9 @@
 #include "mainwidget.h"
 #include "setparamwidget.h"
 #include "calcwidget.h"
+#include "aboutwidget.h"
+#include "epstructwidget.h"
+#include "refracidxwidget.h"
 
 class LToolBar1;
 
@@ -31,6 +34,11 @@ public slots:
     void chooseAnimations();
     void nextFigure();
     void upFigure();
+    void figuresSave();
+    void figuresSaveAs();
+    void about();
+    void epitaxyStruct();
+    void refractiveIndex();
 
 private:
     void createMenuBar();
@@ -41,10 +49,15 @@ private:
     QMenu *mpCalcMenu = nullptr;
     QMenu *mpSetupMenu = nullptr;
     QMenu *mpDataSaveMenu = nullptr;
+    QMenu *mpReportMenu = nullptr;
     QMenu *mpAboutMenu = nullptr;
     QList<LToolBar1*> toolBars;
     SetParamWidget *p_setparamW;
     CalcWidget *p_calcW;
+    AboutWidget *p_aboutW;
+    EpStructWidget *p_epStructW;
+    RefracIdxWidget *p_refracIdxW;
+
 
     QActionGroup *m_themeActions = nullptr;
     QAction *m_lightAction = nullptr;
@@ -56,7 +69,7 @@ private:
     QAction *m_blueIcyAction = nullptr;
     QAction *m_contrastAction = nullptr;
 
-    QChart::ChartTheme m_ct = QChart::ChartThemeLight;
+    QChart::ChartTheme m_ct = QChart::ChartThemeLight;  //m_ct means m_charttheme
 
     QActionGroup *m_animationActions = nullptr;
     QAction *m_NoAnimationAction = nullptr;
@@ -64,7 +77,10 @@ private:
     QAction *m_SeriesAnimationsAction = nullptr;
     QAction *m_AllAnimationsAction = nullptr;
 
-    QChart::AnimationOption m_ao = QChart::NoAnimation;
+    QChart::AnimationOption m_ao = QChart::NoAnimation;  //m_ao means m_animationoption
+    QString m_figureSavePathName;  //no init value, .isEmpty() still is true
+
+
 
 
 signals:

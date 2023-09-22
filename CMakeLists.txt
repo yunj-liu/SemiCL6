@@ -62,7 +62,15 @@ set(PROJECT_SOURCES
     calcwidget.cpp
     calcwidget.h
     calcmatlabthread.cpp
-    calcmatlabthread.h)
+    calcmatlabthread.h
+    aboutwidget.cpp
+    aboutwidget.h
+    aboutwidget.ui
+    epstructwidget.cpp
+    epstructwidget.h
+    refracidxwidget.cpp
+    refracidxwidget.h
+)
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
   qt_add_executable(07SemiCL6 MANUAL_FINALIZATION ${PROJECT_SOURCES}
