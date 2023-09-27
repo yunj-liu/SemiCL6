@@ -25,6 +25,7 @@ public:
     int getListviewCurrentIndex();
     void setActiveWithIndex(int index=0, QChart::ChartTheme ct=QChart::ChartThemeLight, QChart::AnimationOption ao = QChart::NoAnimation);
     FigureData& getFigureData();
+    QWidget *m_pmainW = nullptr;
 
 
 protected:

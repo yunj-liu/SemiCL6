@@ -26,6 +26,8 @@ private:
     QAction *mExitAction;
     QAction *mFiguresSaveAction;
     QAction *mFiguresSaveasAction;
+    QAction *mRidxReportAction;
+    QAction *mEpStrucReportAction;
 
 
 };

@@ -20,6 +20,7 @@ public:
     //explicit CalcWidget(QWidget *parent = nullptr, MainWidget *p_mainwidget = nullptr);
     explicit CalcWidget(MainWidget *p_mainwidget = nullptr);
     double m_ArrInParams[12];
+    FigureData m_datatableMap;
 
 private:
     QLabel *m_pCautionLabel = nullptr;
@@ -27,12 +28,14 @@ private:
     CalcMatlabThread *m_thread = nullptr;
     bool m_calcDone = false;
     MainWidget *m_pmainwidget = nullptr;
+    QWidget *m_pmainwnd = nullptr;
 
 private slots:
     void closeEvent(QCloseEvent*);
     void doMatlabDone(const QString info, const FigureData figure_datatablemap);
 
 signals:
+    void SendMainWndMatlabDone(const FigureData datatablemap);
 
 };
 

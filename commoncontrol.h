@@ -22,6 +22,13 @@ public:
     static FigureData generateFigureData(double(*pArrInParams)[12]);
     static void saveDataTableToCsvFile(QString sPathName, QString sFileName, DataTable& dt);
     static void saveFigureDataHashMapToCsvFile(QString sFoldName, int figureNum, FigureData &fd);
+
+    static QString getStringFromIndex(int idx);
+    static void saveReIdxDTtoCsvFile(QString sPathName, QString sFileName, DataTable& dt);
+    static DataTable getReIdxDTfromCsvFile(QString filePathName);
+    static QString getStringFromEpStruc(int idx);
+    static void saveEpStrucDTtoCsvFile(QString sPathName, QString sFileName, DataTable& dt);
+    static DataTable getEpStrucDTfromCsvFile(QString filePathName);
 };
 
 #endif // COMMONCONTROL_H

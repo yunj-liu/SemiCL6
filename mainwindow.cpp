@@ -15,10 +15,12 @@
 #include <QFile>
 #include <QActionGroup>
 #include <QFileDialog>
+//#include <QLayout>
 
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow{parent}
+    , m_datatableMap(CommonControl::getFigureDataHashMapFromCsvFile("/projdata/", 7))
 {
     //qApp->setApplicationDisplayName(tr("半导体激光器芯片设计软件 SemiCL V1.0 - NCAMCQ"));  //instead of setWindowTitle
     setObjectName("MainWindow");
@@ -74,14 +76,33 @@ void MainWindow::createMenuBar()
 
 void MainWindow::refractiveIndex()
 {
-    p_refracIdxW = new RefracIdxWidget();
-    p_refracIdxW->show();
+    /*
+    if(m_datatableMap.find(QString("refractiveIndex")) != m_datatableMap.end())  //judge the key exist or not
+    {
+        p_refracIdxW = new RefracIdxWidget(&m_datatableMap[QString("refractiveIndex")]);
+        qDebug() << "key exist";
+    }
 
+    else{
+        p_refracIdxW = new RefracIdxWidget();
+        qDebug() << "key not exist";
+    }*/
+
+    p_refracIdxW = new RefracIdxWidget(&m_datatableMap[QString("refractiveIndex")]);
+    p_refracIdxW->show();
+}
+
+void MainWindow::doCalcDone(const FigureData datatablemap)
+{
+    m_datatableMap = datatablemap;
+    qDebug() << "MainWindow::doCalcDone";
+    qDebug() << m_datatableMap[QString("refractiveIndex")].at(0).at(0).second;
+    statusBar()->showMessage(QString("计算已完成."));
 }
 
 void MainWindow::epitaxyStruct()
 {
-    p_epStructW = new EpStructWidget();
+    p_epStructW = new EpStructWidget(&m_datatableMap[QString("epStruc")]);
     p_epStructW->show();
 }
 
@@ -372,7 +393,9 @@ void MainWindow::setCalcParams()
 
 void MainWindow::matlabCalc()
 {
+    statusBar()->showMessage(QString("正在计算..."));
     p_calcW = new CalcWidget(m_pMainWidget);
+    connect(p_calcW, &CalcWidget::SendMainWndMatlabDone, this, &MainWindow::doCalcDone);
     p_calcW->show();
 }
 
@@ -428,6 +451,7 @@ void MainWindow::resetCalcParams()
     // read csv
     FigureData datatableMap;
     datatableMap = CommonControl::getFigureDataHashMapFromCsvFile(QString("/resetdata/"), 7);
+    m_datatableMap = datatableMap;
     //for(int i(1); i<=7; i++)
     //    qDebug() << datatableMap["figure"+QString::number(i)].count();
 
@@ -437,3 +461,4 @@ void MainWindow::resetCalcParams()
     //refresh
     m_pMainWidget->refershChartThemes();
 }
+

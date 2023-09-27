@@ -22,6 +22,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = nullptr);
     MainWidget *m_pMainWidget = nullptr;
+    FigureData m_datatableMap;
 
 public slots:
     void saveLayout();
@@ -39,6 +40,10 @@ public slots:
     void about();
     void epitaxyStruct();
     void refractiveIndex();
+
+private slots:
+    void doCalcDone(const FigureData datatablemap);
+
 
 private:
     void createMenuBar();
@@ -79,7 +84,6 @@ private:
 
     QChart::AnimationOption m_ao = QChart::NoAnimation;  //m_ao means m_animationoption
     QString m_figureSavePathName;  //no init value, .isEmpty() still is true
-
 
 
 

@@ -134,8 +134,8 @@ void CalcWidget::closeEvent(QCloseEvent *event)
     m_pPicLabel->setHidden(false);
     m_pCautionLabel->setHidden(false);
     //m_pCautionLabel->setText(QString("请勿关闭窗口和程序"));
-    QTimer::singleShot(3000, m_pCautionLabel, SLOT(hide()));
-    QTimer::singleShot(3000, m_pPicLabel, SLOT(hide()));
+    QTimer::singleShot(3000, m_pCautionLabel, SLOT(hide()));  // attention text
+    QTimer::singleShot(3000, m_pPicLabel, SLOT(hide()));  //icon
     if(!m_calcDone){
         event->ignore();
     }
@@ -144,6 +144,8 @@ void CalcWidget::closeEvent(QCloseEvent *event)
 void CalcWidget::doMatlabDone(const QString info, const FigureData figure_datatablemap)
 {
     qDebug() << info;
+    //m_datatableMap = figure_datatablemap;
+    emit SendMainWndMatlabDone(figure_datatablemap);
     m_calcDone = true;
     close();
     close();

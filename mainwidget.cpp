@@ -19,6 +19,7 @@
 //#include "SemiCL6Func.h"
 //#include <QMessageBox>
 
+
 MainWidget::MainWidget(QWidget *parent, QChart::ChartTheme ct, QChart::AnimationOption ao)
     : QWidget(parent)
     , m_listView(new QListView(this))
@@ -27,6 +28,8 @@ MainWidget::MainWidget(QWidget *parent, QChart::ChartTheme ct, QChart::Animation
     //, m_datatableMap(CommonControl::generateFigureData())
     , m_datatableMap(CommonControl::getFigureDataHashMapFromCsvFile("/projdata/", 7))
 {
+    m_pmainW = parent;
+
     //set chart theme
     m_ct = ct;
     //set animation option

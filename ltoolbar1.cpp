@@ -42,6 +42,14 @@ LToolBar1::LToolBar1(const QString &title, MainWindow *mainWindow)
 
     mSep1 = addSeparator();
 
+    mEpStrucReportAction = addAction(QIcon(":/imgs/chip-60.png"), QString("芯片外延结构"));
+    connect(mEpStrucReportAction, &QAction::triggered, mainWindow, &MainWindow::epitaxyStruct);
+
+    mRidxReportAction = addAction(QIcon(":/imgs/refraction-48.png"), QString("外延材料折射率"));
+    connect(mRidxReportAction, &QAction::triggered, mainWindow, &MainWindow::refractiveIndex);
+
+    mSep1 = addSeparator();
+
     mAboutAction = addAction(QIcon(":/imgs/about-60.png"), QString("关于"));  //color code:#743391
     connect(mAboutAction, &QAction::triggered, mainWindow, &MainWindow::about);
 
